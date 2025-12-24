@@ -3,341 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daeseok Song - AI Researcher</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>DaeSeok Song | AI Research Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-
-        :root {
-            --primary-color: #1a237e; /* Deep Indigo Blue */
-            --secondary-color: #283593; /* Medium Indigo Blue */
-            --accent-color: #43a047; /* Vivid Green */
-            --text-color: #212121;
-            --light-text-color: #ffffff;
-            --bg-color: #f8f9fa;
-            --card-bg-color: #ffffff;
-            --border-color: #e0e0e0;
-            --hover-color: #388e3c; /* Darker Green for hover */
-            --font-main: 'Roboto', 'Noto Sans KR', sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
+        .section-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.05);
+        }
         html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-main);
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        /* --- Navigation --- */
-        nav {
-            position: sticky;
-            top: 0;
-            background-color: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        nav .container {
-            display: flex;
-            justify-content: center;
-            padding: 0 20px;
-        }
-        nav a {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 500;
-            padding: 10px 20px;
-            transition: color 0.3s, background-color 0.3s;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            color: var(--light-text-color);
-            background-color: var(--accent-color);
-        }
-
-        /* --- Header / Hero Section --- */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 60px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-        }
-
-        .header-text { flex: 1; padding-right: 30px; }
-        .header h1 { font-size: 2.8em; margin: 0 0 10px 0; color: var(--primary-color); }
-        .header .subtitle { font-size: 1.3em; font-weight: 300; margin: 0; color: var(--secondary-color); }
-        .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .contact-links { margin-top: 25px; }
-        .contact-links a { 
-            text-decoration: none; 
-            color: var(--light-text-color);
-            background-color: var(--secondary-color);
-            padding: 10px 18px;
-            border-radius: 25px;
-            margin-right: 10px; 
-            margin-bottom: 10px;
-            font-weight: 500; 
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
-        }
-        .contact-links a:hover { 
-            background-color: var(--accent-color); 
-            transform: translateY(-2px);
-        }
-        .contact-links a i { margin-right: 8px; }
-
-        /* --- Sections --- */
-        .section { margin-bottom: 60px; }
-        .section h2 { font-size: 2em; color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 30px; display: flex; align-items: center; }
-        .section h2 i { margin-right: 15px; color: var(--accent-color); }
-
-        /* --- About Section --- */
-        #about p { font-size: 1.1em; text-align: justify; }
-
-        /* --- Project Card Layout --- */
-        .project-card {
-            background-color: var(--card-bg-color);
-            border-left: 5px solid var(--accent-color);
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-            display: flex;
-            gap: 25px;
-            align-items: flex-start;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        .project-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.12); transform: translateY(-5px); }
-        
-        .project-image {
-            flex: 0 0 200px;
-            text-align: center;
-        }
-        .project-image img {
-            width: 100%;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .project-content { flex: 1; }
-        
-        .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .project-header h3 { margin: 0; font-size: 1.4em; color: var(--secondary-color); }
-        .project-header .date { font-weight: 500; color: #777; text-align: right; font-size: 0.9em; }
-        .project-role { font-weight: bold; font-style: italic; color: var(--primary-color); margin-top: 5px; margin-bottom: 15px; }
-        .project-description p { margin-top: 0; }
-        .project-links { margin-top: 20px; }
-        .project-links a { text-decoration: none; background-color: var(--accent-color); color: var(--light-text-color); padding: 8px 15px; border-radius: 5px; font-weight: 500; margin-right: 10px; transition: background-color 0.3s ease; display: inline-flex; align-items: center; }
-        .project-links a:hover { background-color: var(--hover-color); }
-        .project-links a i { margin-right: 8px; }
-
-        /* --- Footer --- */
-        footer { text-align: center; padding: 20px; color: #888; border-top: 1px solid var(--border-color); }
-
-        @media (max-width: 768px) {
-            .header { flex-direction: column-reverse; text-align: center; }
-            .header-text { padding-right: 0; margin-top: 20px; }
-            .project-card { flex-direction: column; }
-            .project-image { flex: 0 0 auto; width: 100%; margin-bottom: 20px; }
-            nav .container { flex-wrap: wrap; justify-content: center; }
-            nav a { padding: 8px 12px; font-size: 0.9em;}
-        }
     </style>
 </head>
-<body>
+<body class="bg-[#fcfdfe] text-slate-900 selection:bg-blue-100 selection:text-blue-900">
 
-    <nav>
-        <div class="container">
-            <a href="#about">About</a>
-            <a href="#publications">Publications</a>
-            <a href="#experience">Experience & Projects</a>
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="font-extrabold text-xl tracking-tighter italic uppercase">DaeSeok <span class="text-blue-600">Song</span></a>
+            <div class="hidden md:flex space-x-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
+                <a href="#research" class="hover:text-blue-600 transition-colors">Research</a>
+                <a href="#experience" class="hover:text-blue-600 transition-colors">Experience</a>
+                <a href="#publications" class="hover:text-blue-600 transition-colors">Publications</a>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
-        <!-- ==================== HEADER ==================== -->
-        <header class="header">
-            <div class="header-text">
-                <h1>Daeseok Song</h1>
-                <p class="subtitle">A Brain-inspired AI Researcher for Sustainable Intelligence</p>
-                <div class="contact-links">
-                    <a href="mailto:zxdsaqwe1231@naver.com"><i class="fas fa-envelope"></i>Email</a>
-                    <a href="DaeseokSong_Resume_KR.pdf" target="_blank"><i class="fas fa-file-pdf"></i>CV (KR)</a>
-                    <a href="DaeseokSong_Resume_EN.pdf" target="_blank"><i class="fas fa-file-pdf"></i>CV (EN)</a>
-                    <a href="https://github.com/DaeSeokSong" target="_blank"><i class="fab fa-github"></i>GitHub</a>
-                    <a href="https://kr.linkedin.com/in/song-daeseok-7903881b6" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
-                </div>
-            </div>
-            <!-- Upload your profile picture as 'profile.jpg' -->
-            <img src="profile.jpg" alt="Daeseok Song Profile Picture" class="profile-pic">
-        </header>
-
-        <!-- ==================== ABOUT / RESEARCH GOAL ==================== -->
-        <section id="about" class="section">
-            <h2><i class="fas fa-user-circle"></i>About Me & Research Objective</h2>
-            <p>
-                I want to make AI for a better life for all of humanity.
-            </p>
-            <p>
-                As an AI Engineer with three years of experience tackling real-world efficiency challenges in the medical AI industry, I have developed a strong conviction. My work required building all AI systems for on-premise deployment due to strict hospital security policies, where I had to meticulously optimize our models for CPU-based inference to overcome the immense cost and power issues of GPUs.
-            </p>
-            <p>
-                This hands-on experience led me to recognize the broader physical inefficiencies across the AI industry, such as those seen in Meta's data centers and Google's SMR plans, and convinced me that the fundamental limitations of the von Neumann architecture must be overcome. This realization has guided my focus toward Spiking Neural Networks (SNNs) and Neuromorphic Computing as the solution.
-            </p>
-            <p>
-                My core research objective is to make this efficient, 3rd-generation neural network universally accessible. Ultimately, I aim to establish a general-purpose learning methodology for SNNs, much like Geoffrey Hinton did for ANNs with Backpropagation, to contribute to the future of sustainable AI.
-            </p>
-        </section>
-
-        <!-- ==================== PUBLICATIONS ==================== -->
-        <section id="publications" class="section">
-            <h2><i class="fas fa-book-open"></i>Publications & Patents</h2>
-            <div class="project-card">
-                 <div class="project-image">
-                    <img src="paper1_fig2.png" alt="Ensemble Method Diagram">
-                </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>Accurate, automated classification of radiographic knee osteoarthritis severity...</h3>
-                        <div class="date">2024</div>
-                    </div>
-                    <p class="project-role">2nd Author (Lead Algorithm Developer) | Knee Surgery & Related Research (SCIE)</p>
-                    <div class="project-description">
-                        <p>Inspired by the consensus-based decision-making process of clinicians, I designed and developed a novel ensemble methodology. By combining models that capture different features (Global/Local), I consistently improved classification accuracy by 2-3 percentage. This core technology has been filed for international (PCT) and Korean patents.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://kneesurgrelatres.biomedcentral.com/articles/10.1186/s43019-024-00228-3" target="_blank"><i class="fas fa-link"></i>Journal Link</a>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <header id="about" class="max-w-5xl mx-auto px-6 py-16 md:py-24">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-12">
+            <!-- Profile Image -->
+            <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
+                <div class="absolute inset-0 bg-blue-600 rounded-3xl rotate-3 -z-10 opacity-5"></div>
+                <img src="profile.jpg" alt="DaeSeok Song" class="w-full h-full object-cover rounded-3xl shadow-lg border-2 border-white" onerror="this.src='https://via.placeholder.com/300'">
             </div>
             
-            <div class="project-card">
-                 <div class="project-image">
-                    <img src="paper2_fig2.png" alt="Segmentation Result Comparison">
+            <div class="flex-1 text-center md:text-left">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
+                    <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100">AI Research Engineer</span>
+                    <span class="px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-amber-100">Valedictorian</span>
                 </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>Image size transformation data augmentation method for lesion segmentation on normalization and argumentation medical images</h3>
-                        <div class="date">2022</div>
-                    </div>
-                    <p class="project-role">1st Author | Korean Software Conference (KSC 2022)</p>
-                    <div class="project-description">
-                        <p>I demonstrated that a simple data augmentation strategy, based on image size and aspect ratio, could significantly boost a medical image segmentation model's Dice Score from 86.95% to 90.48% without complex algorithmic changes. As my first lead-author paper, I independently drove the entire research process from problem definition to final analysis.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank"><i class="fas fa-link"></i>Journal Link</a>
-                        <a href="https://github.com/DaeSeokSong/ComputerVision/tree/master/Wound_Image_Segmentation" target="_blank"><i class="fab fa-github"></i>GitHub Code</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== EXPERIENCE & PROJECTS ==================== -->
-        <section id="experience" class="section">
-            <h2><i class="fas fa-briefcase"></i>Research & Industry Experience</h2>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="connecteve_mtl_example.png" alt="MTL Architecture">
-                </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>Connective Co., Ltd.</h3>
-                        <div class="date">Nov 2022 - Present</div>
-                    </div>
-                    <p class="project-role">AI Engineer</p>
-                    <div class="project-description">
-                         <p>As a founding AI engineer, I led the full development lifecycle, contributing to the company's first commercial product and its international regulatory approvals. My key research involved designing an end-to-end Multi-Task Learning framework to unify four vision models, which reduced model size by 50% and saved 6.3GB in weights while improving accuracy by over 3%. This work led me to initiate a preliminary study on Spiking Neural Networks, where I researched core concepts like Surrogate Gradients to validate their feasibility for future ultra-low-power products.</p>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-slate-950 leading-tight">
+                    Proving <span class="gradient-text">Efficiency</span>, <br>Investigating <span class="gradient-text">Intelligence</span>.
+                </h1>
+                <p class="text-lg text-slate-500 mb-8 leading-relaxed font-medium max-w-2xl">
+                    3rd-year AI Engineer at <span class="text-slate-950 font-bold border-b-2 border-blue-200">Connective Co., Ltd.</span> Bridge biological brain mechanisms with artificial neural networks through research on <span class="italic font-semibold text-slate-800 text-sm">FF, GLOM, and Role-based MoE.</span>
+                </p>
+                
+                <!-- Resume Download & Links -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                    <a href="DaeseokSong_Resume_KR.pdf" download class="px-5 py-2.5 bg-slate-950 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition shadow-md shadow-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-file-pdf"></i> Resume (KR)
+                    </a>
+                    <a href="DaeseokSong_Resume_EN.pdf.pdf" download class="px-5 py-2.5 bg-white text-slate-900 border border-slate-200 rounded-xl text-sm font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice"></i> Resume (EN)
+                    </a>
+                    <div class="flex items-center gap-4 ml-2">
+                        <a href="https://linkedin.com/in/song-daeseok-7b6" target="_blank" class="text-slate-300 hover:text-blue-600 text-xl transition"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com/DaeSeokSong" target="_blank" class="text-slate-300 hover:text-slate-950 text-xl transition"><i class="fa-brands fa-github"></i></a>
                     </div>
                 </div>
             </div>
+        </div>
+    </header>
 
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="minerva_soft_example.jpeg" alt="Barcode Recognition Rate Graph">
-                </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>Minerva Soft Inc.</h3>
-                        <div class="date">Mar 2022 - Jul 2022</div>
+    <!-- Research Focus (Vertical Gap Reduced) -->
+    <section id="research" class="py-16 bg-white border-y border-slate-100">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-3xl font-black tracking-tight text-slate-950 mb-10">Independent Research</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- FF & GLOM -->
+                <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-200 section-card">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
+                        <i class="fa-solid fa-dna text-xl"></i>
                     </div>
-                    <p class="project-role">Image Processing Intern</p>
-                    <div class="project-description">
-                        <p>I developed an OpenCV-based image preprocessing algorithm (Thresholding, Morphology) that improved a legacy barcode reader's recognition rate from ~70% to over 90%. I also gained experience in commercial software development by ensuring code stability through memory leak testing and deploying the solution as a C++ DLL.</p>
+                    <h3 class="text-xl font-bold mb-3">FF & GLOM Scratch Implementation</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        Emulating cortical functional differentiation by implementing the core logic of Hinton's Forward-Forward and GLOM from scratch without external libraries.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Greedy Learning</span>
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Consensus Mechanism</span>
+                    </div>
+                </div>
+
+                <!-- Role-based MoE & LoRA (Updated Content) -->
+                <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-200 section-card">
+                    <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-6">
+                        <i class="fa-solid fa-users-gear text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Role-based MoE & LoRA Adaptation</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        Investigating effective Foundation Model adaptation by combining Role-based Mixture-of-Experts with LoRA. Validating performance gains in <span class="font-bold text-slate-800">few-shot learning scenarios.</span>
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">MoE Adaptation</span>
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Few-shot Performance</span>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience (Vertical Gap Reduced) -->
+    <section id="experience" class="py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-3xl font-black tracking-tight text-slate-950 mb-12">Professional Experience</h2>
             
-            <div class="project-card">
-                 <div class="project-image">
-                    <img src="PPoA_example.png" alt="LSTM Prediction Result">
-                </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>LSTM-based Agricultural Price Prediction</h3>
-                        <div class="date">2021</div>
+            <div class="space-y-16">
+                <!-- Connective -->
+                <div class="group">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-950">Connective Co., Ltd.</h3>
+                            <p class="text-blue-600 font-bold text-xs uppercase tracking-widest">AI Research Engineer (Founding Member)</p>
+                        </div>
+                        <div class="text-slate-400 font-bold text-xs md:text-right mt-2 md:mt-0 italic">
+                            Nov 2022 — Present | Seoul, KR
+                        </div>
                     </div>
-                    <p class="project-role">Team Leader | Grand Prize, AI Idea Competition</p>
-                    <div class="project-description">
-                        <p>To explore time-series modeling, I led a team to develop a model that predicts agricultural prices (achieving an MSE of 0.0508) using multivariate data like weather and production volume. This project won the grand prize for its practical application and technical execution.</p>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/DaeSeokSong/LSTM-PPoA" target="_blank"><i class="fab fa-github"></i>GitHub Code</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                 <div class="project-image">
-                    <img src="aengmu_example.png" alt="NLP Chatbot Concept">
-                </div>
-                <div class="project-content">
-                    <div class="project-header">
-                        <h3>Personalized Chatbot "Aengmu"</h3>
-                        <div class="date">2021</div>
-                    </div>
-                    <p class="project-role">Personal Project</p>
-                    <div class="project-description">
-                        <p>As an early self-study project to understand NLP fundamentals, I built a chatbot that learns a user's speaking style from KakaoTalk conversations. By implementing a Seq2Seq/Attention model in PyTorch from scratch, I gained a foundational understanding that later provided a deep appreciation for the innovations of Transformer-based LLMs.</p>
-                    </div>
-                     <div class="project-links">
-                        <a href="https://github.com/DaeSeokSong/NLP-Aengmu" target="_blank"><i class="fab fa-github"></i>GitHub Code</a>
+                    <div class="grid md:grid-cols-2 gap-6 bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm group-hover:border-blue-100 transition-colors">
+                        <div class="space-y-4 text-slate-600 text-xs leading-relaxed">
+                            <p><strong class="text-slate-900">Foundation Models:</strong> Automated standard pipelines for 5+ large-scale models (DINOv3, etc.) within a 5-day cycle.</p>
+                            <p><strong class="text-slate-900">Multi-Task Learning:</strong> Unified 4 vision models into a single backbone, achieving 52% reduction in size.</p>
+                        </div>
+                        <div class="space-y-4 text-slate-600 text-xs leading-relaxed">
+                            <p><strong class="text-slate-900">Regulatory & Compliance:</strong> Managed AI technical documentation for KFDA, UAE MOH, and European CE MDR.</p>
+                            <p><strong class="text-slate-900">Ensemble Systems:</strong> Developed consensus-based algorithms reducing diagnostic disagreement.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-        </section>
+    <!-- Publications (Vertical Gap Reduced) -->
+    <section id="publications" class="bg-slate-950 text-white py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-3xl font-black tracking-tight mb-12">Publications & Patents</h2>
+            <div class="grid gap-10">
+                <!-- SCIE Paper -->
+                <div class="group relative pl-10">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-blue-600 group-hover:w-2 transition-all rounded-full"></div>
+                    <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 block">SCIE Journal | 2nd Author</span>
+                    <h3 class="text-lg font-bold mb-3 text-slate-100 italic">
+                        <a href="https://kneesurgrelatres.biomedcentral.com/articles/10.1186/s43019-024-00228-3" target="_blank" class="hover:underline">Accurate, automated classification of radiographic knee osteoarthritis severity...</a>
+                    </h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Knee Surgery & Related Research, 2024. Modeled doctor consensus for medical image classification.</p>
+                </div>
 
-        <!-- ==================== FOOTER ==================== -->
-        <footer>
-            <p>&copy; 2025 Daeseok Song. All Rights Reserved.</p>
-        </footer>
+                <!-- Patent -->
+                <div class="group relative pl-10">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-purple-600 group-hover:w-2 transition-all rounded-full"></div>
+                    <span class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-2 block">International Patent | Inventor</span>
+                    <h3 class="text-lg font-bold mb-3 text-slate-100">Ensemble system for improving osteoarthritis classification accuracy</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">PCT/KR2025/012689, Domestic Patent 10-2024-0124529.</p>
+                </div>
 
-    </div>
+                <!-- KSC Paper (Restored) -->
+                <div class="group relative pl-10">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-green-600 group-hover:w-2 transition-all rounded-full"></div>
+                    <span class="text-[10px] font-black text-green-400 uppercase tracking-widest mb-2 block">Conference Paper | 1st Author</span>
+                    <h3 class="text-lg font-bold mb-3 text-slate-100">Image size transformation data augmentation method for lesion segmentation...</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Korea Computer Congress (KSC 2022). Improved Dice Score from 86.95% to 90.48%.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Awards (Vertical Gap Reduced) -->
+    <section class="py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-2xl font-black tracking-tight mb-8">Academic</h2>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                        <h3 class="text-md font-bold text-slate-950">University of Suwon</h3>
+                        <p class="text-blue-600 font-bold text-xs mb-3">B.S. in Information Security | Feb 2023</p>
+                        <ul class="space-y-2 text-xs">
+                            <li class="flex items-center gap-2 font-bold text-slate-700">
+                                <i class="fa-solid fa-crown text-amber-500"></i> Valedictorian (Top Graduate)
+                            </li>
+                            <li class="flex items-center gap-2 text-slate-500">
+                                <i class="fa-solid fa-chart-line"></i> GPA: 4.29 / 4.5 (Major: 4.37)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black tracking-tight mb-8">Honors</h2>
+                    <div class="space-y-5">
+                        <div class="flex gap-3">
+                            <div class="text-blue-600 font-black text-sm italic">01</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm underline decoration-blue-200">Grand Prize (1st Place)</h4>
+                                <p class="text-xs text-slate-500 font-medium">AI Idea Contest for the Underprivileged: LSTM agricultural prediction.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="text-blue-600 font-black text-sm italic">02</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Outstanding Student Award</h4>
+                                <p class="text-xs text-slate-500 font-medium">Military Open SW Training: Selected as top 50 among thousands.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 py-12 text-center">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex justify-center space-x-8 mb-6 text-2xl">
+                <a href="https://github.com/DaeSeokSong" target="_blank" class="text-slate-300 hover:text-slate-950 transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/song-daeseok-7b6" target="_blank" class="text-slate-300 hover:text-blue-600 transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:zxdsaqwe1231@connecteve.com" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p class="text-slate-400 text-[10px] font-black tracking-[0.3em] uppercase italic">© 2025 DaeSeok Song. From SCRATCH to INTELLIGENCE.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
