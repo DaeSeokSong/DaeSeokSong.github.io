@@ -29,9 +29,9 @@
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
             <a href="#" class="font-extrabold text-xl tracking-tighter italic uppercase">DaeSeok <span class="text-blue-600">Song</span></a>
-            <div class="hidden md:flex space-x-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <div class="hidden md:flex space-x-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                 <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
                 <a href="#research" class="hover:text-blue-600 transition-colors">Research</a>
                 <a href="#experience" class="hover:text-blue-600 transition-colors">Experience</a>
@@ -41,32 +41,33 @@
     </nav>
 
     <!-- Hero Section -->
-    <header id="about" class="max-w-5xl mx-auto px-6 py-16 md:py-24">
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-12">
+    <header id="about" class="max-w-5xl mx-auto px-6 py-12 md:py-16">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
             <!-- Profile Image -->
-            <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
+            <div class="w-44 h-44 md:w-56 md:h-56 flex-shrink-0 relative">
                 <div class="absolute inset-0 bg-blue-600 rounded-3xl rotate-3 -z-10 opacity-5"></div>
                 <img src="profile.jpg" alt="DaeSeok Song" class="w-full h-full object-cover rounded-3xl shadow-lg border-2 border-white" onerror="this.src='https://via.placeholder.com/300'">
             </div>
             
             <div class="flex-1 text-center md:text-left">
-                <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
-                    <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100">AI Research Engineer</span>
-                    <span class="px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-amber-100">Valedictorian</span>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-3">
+                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-blue-100">AI Research Engineer</span>
+                    <span class="px-2 py-0.5 bg-amber-50 text-amber-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-amber-100">Valedictorian</span>
+                    <span class="px-2 py-0.5 bg-purple-50 text-purple-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-purple-100">Grand Prize Winner</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-slate-950 leading-tight">
+                <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-slate-950 leading-tight">
                     Proving <span class="gradient-text">Efficiency</span>, <br>Investigating <span class="gradient-text">Intelligence</span>.
                 </h1>
-                <p class="text-lg text-slate-500 mb-8 leading-relaxed font-medium max-w-2xl">
-                    3rd-year AI Engineer at <span class="text-slate-950 font-bold border-b-2 border-blue-200">Connective Co., Ltd.</span> Bridge biological brain mechanisms with artificial neural networks through research on <span class="italic font-semibold text-slate-800 text-sm">FF, GLOM, and Role-based MoE.</span>
+                <p class="text-md text-slate-500 mb-6 leading-relaxed font-medium max-w-2xl">
+                    3rd-year AI Engineer at <span class="text-slate-950 font-bold border-b-2 border-blue-200">Connective Co., Ltd.</span> Bridge biological brain mechanisms with artificial neural networks through research on <span class="italic font-semibold text-slate-800">FF, GLOM, and Role-based MoE.</span>
                 </p>
                 
                 <!-- Resume Download & Links -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                    <a href="DaeseokSong_Resume_KR.pdf" download class="px-5 py-2.5 bg-slate-950 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition shadow-md shadow-slate-200 flex items-center gap-2">
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 items-center">
+                    <a href="DaeseokSong_Resume_KR.pdf" target="_blank" class="px-4 py-2 bg-slate-950 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-md flex items-center gap-2">
                         <i class="fa-solid fa-file-pdf"></i> Resume (KR)
                     </a>
-                    <a href="DaeseokSong_Resume_EN.pdf.pdf" download class="px-5 py-2.5 bg-white text-slate-900 border border-slate-200 rounded-xl text-sm font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
+                    <a href="DaeseokSong_Resume_EN.pdf" target="_blank" class="px-4 py-2 bg-white text-slate-900 border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
                         <i class="fa-solid fa-file-invoice"></i> Resume (EN)
                     </a>
                     <div class="flex items-center gap-4 ml-2">
@@ -78,67 +79,67 @@
         </div>
     </header>
 
-    <!-- Research Focus (Vertical Gap Reduced) -->
-    <section id="research" class="py-16 bg-white border-y border-slate-100">
+    <!-- Research Focus -->
+    <section id="research" class="py-12 bg-white border-y border-slate-100">
         <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-3xl font-black tracking-tight text-slate-950 mb-10">Independent Research</h2>
-            <div class="grid md:grid-cols-2 gap-8">
+            <h2 class="text-2xl font-black tracking-tight text-slate-950 mb-8">Independent Research</h2>
+            <div class="grid md:grid-cols-2 gap-6">
                 <!-- FF & GLOM -->
-                <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-200 section-card">
-                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6">
-                        <i class="fa-solid fa-dna text-xl"></i>
+                <div class="p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 section-card">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-4">
+                        <i class="fa-solid fa-dna text-lg"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">FF & GLOM Scratch Implementation</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                        Emulating cortical functional differentiation by implementing the core logic of Hinton's Forward-Forward and GLOM from scratch without external libraries.
+                    <h3 class="text-lg font-bold mb-2">FF & GLOM Scratch Implementation</h3>
+                    <p class="text-slate-600 text-xs mb-6 leading-relaxed">
+                        Emulating cortical functional differentiation by implementing Hinton's Forward-Forward and GLOM core logic from scratch without external libraries.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Greedy Learning</span>
-                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Consensus Mechanism</span>
+                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Greedy Learning</span>
+                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Consensus Mechanism</span>
                     </div>
                 </div>
 
-                <!-- Role-based MoE & LoRA (Updated Content) -->
-                <div class="p-8 rounded-[2rem] bg-slate-50 border border-slate-200 section-card">
-                    <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-6">
-                        <i class="fa-solid fa-users-gear text-xl"></i>
+                <!-- Role-based MoE & LoRA -->
+                <div class="p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 section-card">
+                    <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-4">
+                        <i class="fa-solid fa-users-gear text-lg"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Role-based MoE & LoRA Adaptation</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                        Investigating effective Foundation Model adaptation by combining Role-based Mixture-of-Experts with LoRA. Validating performance gains in <span class="font-bold text-slate-800">few-shot learning scenarios.</span>
+                    <h3 class="text-lg font-bold mb-2">Role-based MoE & LoRA Adaptation</h3>
+                    <p class="text-slate-600 text-xs mb-6 leading-relaxed">
+                        Researching effective Foundation Model adaptation by combining <span class="font-bold text-slate-800">Role-based MoE</span> with LoRA. Validating performance in <span class="font-bold text-slate-800">few-shot learning</span> scenarios.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">MoE Adaptation</span>
-                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">Few-shot Performance</span>
+                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">MoE Adaptation</span>
+                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Few-shot Learning</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Professional Experience (Vertical Gap Reduced) -->
-    <section id="experience" class="py-16">
+    <!-- Professional Experience -->
+    <section id="experience" class="py-12">
         <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-3xl font-black tracking-tight text-slate-950 mb-12">Professional Experience</h2>
+            <h2 class="text-2xl font-black tracking-tight text-slate-950 mb-8">Professional Experience</h2>
             
-            <div class="space-y-16">
+            <div class="space-y-12">
                 <!-- Connective -->
                 <div class="group">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
                         <div>
-                            <h3 class="text-2xl font-bold text-slate-950">Connective Co., Ltd.</h3>
-                            <p class="text-blue-600 font-bold text-xs uppercase tracking-widest">AI Research Engineer (Founding Member)</p>
+                            <h3 class="text-xl font-bold text-slate-950">Connective Co., Ltd.</h3>
+                            <p class="text-blue-600 font-bold text-[10px] uppercase tracking-widest">AI Research Engineer (Founding Member)</p>
                         </div>
-                        <div class="text-slate-400 font-bold text-xs md:text-right mt-2 md:mt-0 italic">
+                        <div class="text-slate-400 font-bold text-[10px] md:text-right mt-2 md:mt-0 italic">
                             Nov 2022 — Present | Seoul, KR
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-6 bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm group-hover:border-blue-100 transition-colors">
-                        <div class="space-y-4 text-slate-600 text-xs leading-relaxed">
+                    <div class="grid md:grid-cols-2 gap-6 bg-white p-6 rounded-[1.5rem] border border-slate-100 shadow-sm group-hover:border-blue-200 transition-colors">
+                        <div class="space-y-3 text-slate-600 text-[11px] leading-relaxed">
                             <p><strong class="text-slate-900">Foundation Models:</strong> Automated standard pipelines for 5+ large-scale models (DINOv3, etc.) within a 5-day cycle.</p>
                             <p><strong class="text-slate-900">Multi-Task Learning:</strong> Unified 4 vision models into a single backbone, achieving 52% reduction in size.</p>
                         </div>
-                        <div class="space-y-4 text-slate-600 text-xs leading-relaxed">
+                        <div class="space-y-3 text-slate-600 text-[11px] leading-relaxed">
                             <p><strong class="text-slate-900">Regulatory & Compliance:</strong> Managed AI technical documentation for KFDA, UAE MOH, and European CE MDR.</p>
                             <p><strong class="text-slate-900">Ensemble Systems:</strong> Developed consensus-based algorithms reducing diagnostic disagreement.</p>
                         </div>
@@ -148,50 +149,52 @@
         </div>
     </section>
 
-    <!-- Publications (Vertical Gap Reduced) -->
-    <section id="publications" class="bg-slate-950 text-white py-16">
+    <!-- Publications -->
+    <section id="publications" class="bg-slate-950 text-white py-12">
         <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-3xl font-black tracking-tight mb-12">Publications & Patents</h2>
-            <div class="grid gap-10">
+            <h2 class="text-2xl font-black tracking-tight mb-10">Publications & Patents</h2>
+            <div class="grid gap-8">
                 <!-- SCIE Paper -->
-                <div class="group relative pl-10">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-blue-600 group-hover:w-2 transition-all rounded-full"></div>
-                    <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 block">SCIE Journal | 2nd Author</span>
-                    <h3 class="text-lg font-bold mb-3 text-slate-100 italic">
+                <div class="group relative pl-8">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-blue-600 group-hover:w-1.5 transition-all rounded-full"></div>
+                    <span class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1 block">SCIE Journal | 2nd Author</span>
+                    <h3 class="text-md font-bold mb-2 text-slate-100 italic">
                         <a href="https://kneesurgrelatres.biomedcentral.com/articles/10.1186/s43019-024-00228-3" target="_blank" class="hover:underline">Accurate, automated classification of radiographic knee osteoarthritis severity...</a>
                     </h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">Knee Surgery & Related Research, 2024. Modeled doctor consensus for medical image classification.</p>
+                    <p class="text-slate-400 text-[11px] leading-relaxed">Knee Surgery & Related Research, 2024. Modeled doctor consensus for medical image classification.</p>
                 </div>
 
                 <!-- Patent -->
-                <div class="group relative pl-10">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-purple-600 group-hover:w-2 transition-all rounded-full"></div>
-                    <span class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-2 block">International Patent | Inventor</span>
-                    <h3 class="text-lg font-bold mb-3 text-slate-100">Ensemble system for improving osteoarthritis classification accuracy</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">PCT/KR2025/012689, Domestic Patent 10-2024-0124529.</p>
+                <div class="group relative pl-8">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-purple-600 group-hover:w-1.5 transition-all rounded-full"></div>
+                    <span class="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-1 block">International Patent | Inventor</span>
+                    <h3 class="text-md font-bold mb-2 text-slate-100">Ensemble system for improving osteoarthritis classification accuracy</h3>
+                    <p class="text-slate-400 text-[11px] leading-relaxed">PCT/KR2025/012689, Domestic Patent 10-2024-0124529.</p>
                 </div>
 
-                <!-- KSC Paper (Restored) -->
-                <div class="group relative pl-10">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-green-600 group-hover:w-2 transition-all rounded-full"></div>
-                    <span class="text-[10px] font-black text-green-400 uppercase tracking-widest mb-2 block">Conference Paper | 1st Author</span>
-                    <h3 class="text-lg font-bold mb-3 text-slate-100">Image size transformation data augmentation method for lesion segmentation...</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">Korea Computer Congress (KSC 2022). Improved Dice Score from 86.95% to 90.48%.</p>
+                <!-- KSC Paper -->
+                <div class="group relative pl-8">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-green-600 group-hover:w-1.5 transition-all rounded-full"></div>
+                    <span class="text-[9px] font-black text-green-400 uppercase tracking-widest mb-1 block">Conference Paper | 1st Author</span>
+                    <h3 class="text-md font-bold mb-2 text-slate-100">
+                        <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" class="hover:underline">Image size transformation data augmentation method for lesion segmentation...</a>
+                    </h3>
+                    <p class="text-slate-400 text-[11px] leading-relaxed">Korea Computer Congress (KSC 2022). Improved Dice Score from 86.95% to 90.48%.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Education & Awards (Vertical Gap Reduced) -->
-    <section class="py-16">
+    <!-- Academic & Honors -->
+    <section class="py-12">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12">
+            <div class="grid md:grid-cols-2 gap-8">
                 <div>
-                    <h2 class="text-2xl font-black tracking-tight mb-8">Academic</h2>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200">
-                        <h3 class="text-md font-bold text-slate-950">University of Suwon</h3>
-                        <p class="text-blue-600 font-bold text-xs mb-3">B.S. in Information Security | Feb 2023</p>
-                        <ul class="space-y-2 text-xs">
+                    <h2 class="text-xl font-black tracking-tight mb-6">Academic</h2>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200">
+                        <h3 class="text-sm font-bold text-slate-950">University of Suwon</h3>
+                        <p class="text-blue-600 font-bold text-[10px] mb-2 uppercase">B.S. in Information Security | Feb 2023</p>
+                        <ul class="space-y-1.5 text-[11px]">
                             <li class="flex items-center gap-2 font-bold text-slate-700">
                                 <i class="fa-solid fa-crown text-amber-500"></i> Valedictorian (Top Graduate)
                             </li>
@@ -202,20 +205,20 @@
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black tracking-tight mb-8">Honors</h2>
-                    <div class="space-y-5">
+                    <h2 class="text-xl font-black tracking-tight mb-6 text-slate-950">Honors</h2>
+                    <div class="space-y-4">
                         <div class="flex gap-3">
                             <div class="text-blue-600 font-black text-sm italic">01</div>
                             <div>
-                                <h4 class="font-bold text-slate-900 text-sm underline decoration-blue-200">Grand Prize (1st Place)</h4>
-                                <p class="text-xs text-slate-500 font-medium">AI Idea Contest for the Underprivileged: LSTM agricultural prediction.</p>
+                                <h4 class="font-bold text-slate-900 text-xs">Grand Prize (1st Place)</h4>
+                                <p class="text-[10px] text-slate-500 font-medium">AI Idea Contest for the Underprivileged: LSTM agricultural prediction model.</p>
                             </div>
                         </div>
                         <div class="flex gap-3">
                             <div class="text-blue-600 font-black text-sm italic">02</div>
                             <div>
-                                <h4 class="font-bold text-slate-900 text-sm">Outstanding Student Award</h4>
-                                <p class="text-xs text-slate-500 font-medium">Military Open SW Training: Selected as top 50 among thousands.</p>
+                                <h4 class="font-bold text-slate-900 text-xs">Outstanding Student Award</h4>
+                                <p class="text-[10px] text-slate-500 font-medium">Military Open SW Training: Selected as top 50 among thousands.</p>
                             </div>
                         </div>
                     </div>
@@ -225,14 +228,14 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-12 text-center">
+    <footer class="bg-white border-t border-slate-100 py-10 text-center">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="flex justify-center space-x-8 mb-6 text-2xl">
+            <div class="flex justify-center space-x-8 mb-6 text-xl">
                 <a href="https://github.com/DaeSeokSong" target="_blank" class="text-slate-300 hover:text-slate-950 transition-colors"><i class="fa-brands fa-github"></i></a>
                 <a href="https://linkedin.com/in/song-daeseok-7b6" target="_blank" class="text-slate-300 hover:text-blue-600 transition-colors"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="mailto:zxdsaqwe1231@connecteve.com" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fa-solid fa-envelope"></i></a>
             </div>
-            <p class="text-slate-400 text-[10px] font-black tracking-[0.3em] uppercase italic">© 2025 DaeSeok Song. From SCRATCH to INTELLIGENCE.</p>
+            <p class="text-slate-400 text-[9px] font-black tracking-[0.3em] uppercase italic">© 2025 DaeSeok Song. From SCRATCH to INTELLIGENCE.</p>
         </div>
     </footer>
 
