@@ -1,245 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaeSeok Song | AI Research Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .gradient-text {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .section-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.05);
-        }
-        html { scroll-behavior: smooth; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DaeSeok Song is an AI research engineer building production medical AI and researching replaceable functional modules.">
+  <meta name="theme-color" content="#f4f1e9">
+  <title>DaeSeok Song — AI Research Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-[#fcfdfe] text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-        <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-            <a href="#" class="font-extrabold text-xl tracking-tighter italic uppercase">DaeSeok <span class="text-blue-600">Song</span></a>
-            <div class="hidden md:flex space-x-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
-                <a href="#research" class="hover:text-blue-600 transition-colors">Research</a>
-                <a href="#experience" class="hover:text-blue-600 transition-colors">Experience</a>
-                <a href="#publications" class="hover:text-blue-600 transition-colors">Publications</a>
-            </div>
-        </div>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="DaeSeok Song, home"><span class="wordmark-mark">DS</span><span>DaeSeok Song</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#research">Research</a><a href="#work">Work</a><a href="#writing">Writing</a><a href="#background">Background</a>
     </nav>
+    <a class="header-link" href="mailto:zxdsaqwe1231@naver.com">Contact ↗</a>
+  </header>
 
-    <!-- Hero Section -->
-    <header id="about" class="max-w-5xl mx-auto px-6 py-12 md:py-16">
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
-            <!-- Profile Image -->
-            <div class="w-44 h-44 md:w-56 md:h-56 flex-shrink-0 relative">
-                <div class="absolute inset-0 bg-blue-600 rounded-3xl rotate-3 -z-10 opacity-5"></div>
-                <img src="profile.jpg" alt="DaeSeok Song" class="w-full h-full object-cover rounded-3xl shadow-lg border-2 border-white" onerror="this.src='https://via.placeholder.com/300'">
-            </div>
-            
-            <div class="flex-1 text-center md:text-left">
-                <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-3">
-                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-blue-100">AI Research Engineer</span>
-                    <span class="px-2 py-0.5 bg-amber-50 text-amber-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-amber-100">Valedictorian</span>
-                </div>
-                <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-slate-950 leading-tight">
-                    Proving <span class="gradient-text">Efficiency</span>, <br>Investigating <span class="gradient-text">Intelligence</span>.
-                </h1>
-                <p class="text-md text-slate-500 mb-6 leading-relaxed font-medium max-w-2xl">
-                    3rd-year AI Engineer at <span class="text-slate-950 font-bold border-b-2 border-blue-200">Connective Co., Ltd.</span> Bridge biological brain mechanisms with artificial neural networks through research on <span class="italic font-semibold text-slate-800">brain-inspired and efficiency(like MoE, PEFT, ..).</span>
-                </p>
-                
-                <!-- Resume Download & Links -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-3 items-center">
-                    <a href="resume_kr.pdf" target="_blank" class="px-4 py-2 bg-slate-950 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-md flex items-center gap-2">
-                        <i class="fa-solid fa-file-pdf"></i> Resume (KR)
-                    </a>
-                    <a href="resume_en.pdf" target="_blank" class="px-4 py-2 bg-white text-slate-900 border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
-                        <i class="fa-solid fa-file-invoice"></i> Resume (EN)
-                    </a>
-                    <div class="flex items-center gap-4 ml-2">
-                        <a href="https://www.linkedin.com/in/song-daeseok-7903881b6/" target="_blank" class="text-slate-300 hover:text-blue-600 text-xl transition"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="https://github.com/DaeSeokSong" target="_blank" class="text-slate-300 hover:text-slate-950 text-xl transition"><i class="fa-brands fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> AI research engineer · Seoul</p>
+        <h1>I build AI that survives deployment—and study how to make it <em>modular.</em></h1>
+        <p class="hero-lede">Since 2022, I have worked across the full life cycle of medical AI: experiments, optimization, hospital deployment, and regulatory evidence. Repeated failures under new hospitals and new constraints led me to a second question: can a trained model exchange a functional part without relearning everything?</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#research">See current research</a>
+          <a class="button" href="resume_en.pdf" target="_blank" rel="noreferrer">Academic CV <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="resume_kr.pdf" target="_blank" rel="noreferrer">경력기술서 (KR)</a>
         </div>
-    </header>
+      </div>
 
-    <!-- Research Focus -->
-    <section id="research" class="py-12 bg-white border-y border-slate-100">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-2xl font-black tracking-tight text-slate-950 mb-8">Independent Research</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- FF & GLOM -->
-                <div class="p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 section-card">
-                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-4">
-                        <i class="fa-solid fa-dna text-lg"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">FF & GLOM Scratch Implementation</h3>
-                    <p class="text-slate-600 text-xs mb-6 leading-relaxed">
-                        Emulating cortical functional differentiation by implementing Hinton's Forward-Forward and GLOM core logic from scratch without external libraries.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Greedy Learning</span>
-                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Consensus Mechanism</span>
-                    </div>
-                </div>
+      <aside class="hero-profile reveal" aria-label="Profile summary">
+        <img src="profile.jpg" alt="Portrait of DaeSeok Song" width="320" height="320">
+        <dl>
+          <div><dt>Current</dt><dd>Connecteve · AI Research Engineer</dd></div>
+          <div><dt>Focus</dt><dd>Brain-inspired modular learning</dd></div>
+          <div><dt>Education</dt><dd>Valedictorian · GPA 4.29 / 4.50</dd></div>
+        </dl>
+      </aside>
 
-                <!-- Role-based MoE & LoRA -->
-                <div class="p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 section-card">
-                    <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-4">
-                        <i class="fa-solid fa-users-gear text-lg"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Role-based MoE & LoRA Adaptation</h3>
-                    <p class="text-slate-600 text-xs mb-6 leading-relaxed">
-                        Researching effective Foundation Model adaptation by combining <span class="font-bold text-slate-800">Role-based MoE</span> with LoRA. Validating performance in <span class="font-bold text-slate-800">few-shot learning</span> scenarios.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">MoE Adaptation</span>
-                        <span class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[8px] font-black text-slate-400 uppercase tracking-widest">Few-shot Learning</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="signal-strip" aria-label="Selected results">
+        <div><strong>9 → 2</strong><span>production models consolidated</span></div>
+        <div><strong>3×</strong><span>faster inference pipeline</span></div>
+        <div><strong>24</strong><span>directed module transfers</span></div>
+        <div><strong>1</strong><span>peer-reviewed medical AI paper</span></div>
+      </div>
     </section>
 
-    <!-- Professional Experience -->
-    <section id="experience" class="py-12">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-2xl font-black tracking-tight text-slate-950 mb-8">Professional Experience</h2>
-            
-            <div class="space-y-12">
-                <!-- Connective -->
-                <div class="group">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-950">Connective Co., Ltd.</h3>
-                            <p class="text-blue-600 font-bold text-[10px] uppercase tracking-widest">AI Research Engineer (Founding Member)</p>
-                        </div>
-                        <div class="text-slate-400 font-bold text-[10px] md:text-right mt-2 md:mt-0 italic">
-                            Nov 2022 — Present | Seoul, KR
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6 bg-white p-6 rounded-[1.5rem] border border-slate-100 shadow-sm group-hover:border-blue-200 transition-colors">
-                        <div class="space-y-3 text-slate-600 text-[11px] leading-relaxed">
-                            <p><strong class="text-slate-900">Foundation Models:</strong> Automated standard pipelines for 5+ large-scale models (DINOv3, etc.) within a 5-day cycle.</p>
-                            <p><strong class="text-slate-900">Multi-Task Learning:</strong> Unified 4 vision models into a single backbone, achieving 52% reduction in size.</p>
-                        </div>
-                        <div class="space-y-3 text-slate-600 text-[11px] leading-relaxed">
-                            <p><strong class="text-slate-900">Regulatory & Compliance:</strong> Managed AI technical documentation for KFDA, UAE MOH, and European CE MDR.</p>
-                            <p><strong class="text-slate-900">Ensemble Systems:</strong> Developed consensus-based algorithms reducing diagnostic disagreement.</p>
-                        </div>
-                    </div>
-                </div>
+    <section class="section research-section" id="research">
+      <div class="section-heading reveal">
+        <p class="section-index">01 / CURRENT RESEARCH</p>
+        <h2>RevolverNet</h2>
+        <p>A testbed for learning, routing, removing, and replacing functional subnetworks.</p>
+      </div>
+
+      <div class="research-grid">
+        <div class="research-story reveal">
+          <p class="lead">A <strong>bullet</strong> is a detachable subnetwork trained to own one or more classes or functions. A <strong>chamber</strong> is the slot that receives it. A <strong>trigger</strong> routes each input to the responsible bullet.</p>
+          <p>The metaphor is practical: I want to rotate through specialized modules during learning and inference, then remove or replace one and measure exactly which behavior changes. The long-term goal is not only a smaller model, but an AI system whose functional parts people can inspect and control.</p>
+
+          <div class="research-tabs" data-tabs>
+            <div class="tab-list" role="tablist" aria-label="RevolverNet research details">
+              <button role="tab" aria-selected="true" aria-controls="tab-evidence" id="evidence-tab">Evidence</button>
+              <button role="tab" aria-selected="false" aria-controls="tab-method" id="method-tab">Method</button>
+              <button role="tab" aria-selected="false" aria-controls="tab-next" id="next-tab">Next</button>
             </div>
+            <div class="tab-panel" id="tab-evidence" role="tabpanel" aria-labelledby="evidence-tab">
+              <p class="metric"><span>99.4–99.8%</span> of the performance lost under naive swaps was recovered after one-time alignment.</p>
+              <p>Result from two completed image-classification conditions and 24 directed module transfers. Preliminary, unpublished independent work.</p>
+            </div>
+            <div class="tab-panel" id="tab-method" role="tabpanel" aria-labelledby="method-tab" hidden>
+              <p>Four models per condition shared the dataset, architecture, and role assignment but used different initializations. A 512-image validation set estimated one orthogonal Procrustes transform; transferred bullets were not retrained.</p>
+            </div>
+            <div class="tab-panel" id="tab-next" role="tabpanel" aria-labelledby="next-tab" hidden>
+              <p>Test whether role ownership and transfer survive unseen data, unseen models, and new tasks. I also plan to study when a new chamber and bullet should be added, without treating that condition as a completed result.</p>
+            </div>
+          </div>
         </div>
+
+        <div class="revolver-demo reveal" aria-label="Interactive RevolverNet concept diagram">
+          <div class="demo-label"><span>INTERACTIVE SCHEMATIC</span><span id="demo-state">role_a.selected</span></div>
+          <div class="demo-canvas">
+            <button class="trigger-button" type="button" id="trigger-button" aria-label="Rotate to the next chamber"><span>TRIGGER</span><b>↻</b></button>
+            <div class="route-line" aria-hidden="true"></div>
+            <div class="cylinder" id="cylinder">
+              <button class="chamber is-active" type="button" data-title="Role A bullet" data-copy="A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed."><span>A</span></button>
+              <button class="chamber" type="button" data-title="Role B bullet" data-copy="A separately trained functional subnetwork. Hard routing lets its output affect only the inputs assigned to it."><span>B</span></button>
+              <button class="chamber chamber-open" type="button" data-title="Open chamber" data-copy="A future slot for a new function. Deciding when to add it remains planned work, not a completed result."><span>+</span></button>
+            </div>
+          </div>
+          <div class="demo-readout" aria-live="polite"><span>ACTIVE</span><h3 id="demo-title">Role A bullet</h3><p id="demo-copy">A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed.</p></div>
+        </div>
+      </div>
     </section>
 
-    <!-- Publications -->
-    <section id="publications" class="bg-slate-950 text-white py-12">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-2xl font-black tracking-tight mb-10">Publications & Patents</h2>
-            <div class="grid gap-8">
-                <!-- SCIE Paper -->
-                <div class="group relative pl-8">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-blue-600 group-hover:w-1.5 transition-all rounded-full"></div>
-                    <span class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1 block">SCIE Journal | 2nd Author</span>
-                    <h3 class="text-md font-bold mb-2 text-slate-100 italic">
-                        <a href="https://kneesurgrelatres.biomedcentral.com/articles/10.1186/s43019-024-00228-3" target="_blank" class="hover:underline">Accurate, automated classification of radiographic knee osteoarthritis severity...</a>
-                    </h3>
-                    <p class="text-slate-400 text-[11px] leading-relaxed">Knee Surgery & Related Research, 2024. Modeled doctor consensus for medical image classification.</p>
-                </div>
+    <section class="section" id="work">
+      <div class="section-heading reveal">
+        <p class="section-index">02 / PRODUCTION WORK</p><h2>Medical AI, end to end</h2><p>I joined an early team and learned the parts that research prototypes usually leave out.</p>
+      </div>
 
-                <!-- Patent -->
-                <div class="group relative pl-8">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-purple-600 group-hover:w-1.5 transition-all rounded-full"></div>
-                    <span class="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-1 block">International Patent | Inventor</span>
-                    <h3 class="text-md font-bold mb-2 text-slate-100">Ensemble system for improving osteoarthritis classification accuracy</h3>
-                    <p class="text-slate-400 text-[11px] leading-relaxed">PCT/KR2025/012689, Domestic Patent 10-2024-0124529.</p>
-                </div>
-
-                <!-- KSC Paper -->
-                <div class="group relative pl-8">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-green-600 group-hover:w-1.5 transition-all rounded-full"></div>
-                    <span class="text-[9px] font-black text-green-400 uppercase tracking-widest mb-1 block">Conference Paper | 1st Author</span>
-                    <h3 class="text-md font-bold mb-2 text-slate-100">
-                        <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" class="hover:underline">Image size transformation data augmentation method for lesion segmentation...</a>
-                    </h3>
-                    <p class="text-slate-400 text-[11px] leading-relaxed">Korea Computer Congress (KSC 2022). Improved Dice Score from 86.95% to 90.48%.</p>
-                </div>
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <div class="timeline-meta"><span>2022.11 — PRESENT</span><span>CONNECTEVE</span></div>
+          <div class="timeline-body">
+            <h3>AI Research Engineer · Early Team Member</h3>
+            <p class="work-summary">Model research, clinical product integration, on-premise deployment, and regulatory evidence across the same product life cycle.</p>
+            <div class="work-grid">
+              <div><strong>Multi-task systems</strong><p>Consolidated nine task-specific models into two uncertainty-aware, partial-label models—about one-seventh the weights while maintaining target performance in internal evaluations.</p></div>
+              <div><strong>Deployment</strong><p>Established the MLOps and packaging pipeline; cut engine size by 50%, accelerated inference 3×, and limited overall accuracy change to −0.06 percentage points.</p></div>
+              <div><strong>Medical foundation models</strong><p>Prepared and indexed 100,000+ medical images and evaluated DINOv3, Rad-DINO, EVA-X, linear probing, and parameter-efficient adaptation.</p></div>
+              <div><strong>Evidence and regulation</strong><p>Led technical evidence for Korea, UAE, EU CE MDR, and Singapore, while supporting Japan, U.S., and Deep-Tech TIPS preparation.</p></div>
             </div>
-        </div>
+            <details><summary>More engineering work <span>+</span></summary><ul>
+              <li>Built CT data and training pipelines from DICOM anonymization through SwinUNETR, DynUNet, and MedDINOv3 evaluation.</li>
+              <li>Reduced stored model weights by 5.26 GB through model-zoo comparison, pruning, quantization, and architecture changes.</li>
+              <li>Improved external-site accuracy by approximately 2–3 percentage points with classification and segmentation post-processing.</li>
+              <li>Implemented concurrent multi-input inference services with TorchServe and FastAPI for on-premise environments.</li>
+              <li>Conducted 8 classification, 5 detection, and 8 segmentation studies across hospital testbeds.</li>
+            </ul></details>
+          </div>
+        </article>
+
+        <article class="timeline-item reveal">
+          <div class="timeline-meta"><span>2022.03 — 2022.07</span><span>MINERVA SOFT</span></div>
+          <div class="timeline-body"><h3>Image Processing Intern</h3><p>Replaced full-image barcode scanning with an OpenCV ROI pipeline, improving recognition from <strong>70% to 90%</strong> at <strong>100–250 ms</strong> per barcode. Packaged a C++ DLL and ran more than 170,000 stability and memory-leak iterations.</p></div>
+        </article>
+      </div>
     </section>
 
-    <!-- Academic & Honors -->
-    <section class="py-12">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h2 class="text-xl font-black tracking-tight mb-6">Academic</h2>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200">
-                        <h3 class="text-sm font-bold text-slate-950">University of Suwon</h3>
-                        <p class="text-blue-600 font-bold text-[10px] mb-2 uppercase">B.S. in Information Security | Feb 2023</p>
-                        <ul class="space-y-1.5 text-[11px]">
-                            <li class="flex items-center gap-2 font-bold text-slate-700">
-                                <i class="fa-solid fa-crown text-amber-500"></i> Valedictorian (Top Graduate)
-                            </li>
-                            <li class="flex items-center gap-2 text-slate-500">
-                                <i class="fa-solid fa-chart-line"></i> GPA: 4.29 / 4.5 (Major: 4.37)
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-xl font-black tracking-tight mb-6 text-slate-950">Honors</h2>
-                    <div class="space-y-4">
-                        <div class="flex gap-3">
-                            <div class="text-blue-600 font-black text-sm italic">01</div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-xs">Top Excellence Award (2nd Place)</h4>
-                                <p class="text-[10px] text-slate-500 font-medium">AI Idea Contest for the Underprivileged: LSTM agricultural prediction model.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-blue-600 font-black text-sm italic">02</div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-xs">Outstanding Student Award</h4>
-                                <p class="text-[10px] text-slate-500 font-medium">Military Open SW Training: Selected as top 50 among thousands.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="section dark-section" id="writing">
+      <div class="section-heading reveal"><p class="section-index">03 / PUBLISHED WORK</p><h2>Research that reached the real world</h2></div>
+      <div class="publication-list">
+        <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">SCIE · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research · Co-developed the core algorithm and implementation.</p><span class="publication-arrow">↗</span></a>
+        <div class="publication reveal"><span class="publication-type">PATENT FAMILY · INVENTOR</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Application 10-2024-0124529 · PCT/KR2025/012689</p></div>
+        <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · SUBMITTED TO KSC 2022</span><h3>Image-size transformation augmentation for lesion segmentation in real-time medical imaging</h3><p>Improved DICE from 86.95 to 90.48.</p><span class="publication-arrow">↗</span></a>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-10 text-center">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="flex justify-center space-x-8 mb-6 text-xl">
-                <a href="https://github.com/DaeSeokSong" target="_blank" class="text-slate-300 hover:text-slate-950 transition-colors"><i class="fa-brands fa-github"></i></a>
-                <a href="https://linkedin.com/in/song-daeseok-7b6" target="_blank" class="text-slate-300 hover:text-blue-600 transition-colors"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="mailto:zxdsaqwe1231@connecteve.com" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fa-solid fa-envelope"></i></a>
-            </div>
-            <p class="text-slate-400 text-[9px] font-black tracking-[0.3em] uppercase italic">© 2025 DaeSeok Song. From SCRATCH to INTELLIGENCE.</p>
-        </div>
-    </footer>
+    <section class="section" id="background">
+      <div class="section-heading reveal"><p class="section-index">04 / BACKGROUND</p><h2>Built from fundamentals</h2></div>
+      <div class="background-grid">
+        <article class="education-block reveal"><span class="block-label">EDUCATION</span><h3>University of Suwon</h3><p>B.S. in Information Security · 2023</p><strong>Valedictorian</strong><dl><div><dt>Overall GPA</dt><dd>4.29 / 4.50</dd></div><div><dt>Major GPA</dt><dd>4.37 / 4.50</dd></div></dl></article>
+        <article class="stack-block reveal"><span class="block-label">WORKING STACK</span><div class="stack-lines"><p><span>research</span> controlled ablations · representation analysis · reproducibility</p><p><span>models</span> PyTorch · multi-task learning · medical vision · uncertainty</p><p><span>systems</span> Hydra · Lightning · ONNX · FastAPI · MLOps</p><p><span>languages</span> Python · C/C++ · Korean · English · Japanese</p></div></article>
+      </div>
 
+      <details class="earlier-work reveal"><summary><span>Selected earlier work</span><span>Open archive +</span></summary><div class="archive-grid">
+        <a href="https://github.com/DaeSeokSong/LSTM-PPoA" target="_blank" rel="noreferrer"><strong>Agricultural price forecasting</strong><span>LSTM · MSE 0.0508 · competition award</span></a>
+        <a href="https://github.com/DaeSeokSong/NLP-Aengmu" target="_blank" rel="noreferrer"><strong>Korean conversational-style model</strong><span>Word2Vec · first independent AI project</span></a>
+        <a href="https://github.com/CDST-Studio/JAVA-StockOverlay" target="_blank" rel="noreferrer"><strong>Stock overlay Android app</strong><span>Java · scraping · mobile UI</span></a>
+        <a href="https://github.com/osam2019/APP_MakeUs_Team" target="_blank" rel="noreferrer"><strong>Military health information app</strong><span>Top-50 open-software participant</span></a>
+      </div></details>
+    </section>
+
+    <section class="contact-section">
+      <div class="contact-copy reveal"><p class="section-index">05 / CONTACT</p><h2>Interested in modular intelligence, robust learning, or medical AI?</h2><p>I am open to research conversations and graduate-study opportunities.</p></div>
+      <div class="contact-actions reveal"><a class="button primary" href="mailto:zxdsaqwe1231@naver.com">Send email</a><button class="button" id="copy-email" type="button" data-email="zxdsaqwe1231@naver.com">Copy address</button><a class="text-link" href="https://www.linkedin.com/in/daeseok-song/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a class="text-link" href="https://github.com/DaeSeokSong" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+    </section>
+  </main>
+
+  <footer><span>© <span id="year">2026</span> DaeSeok Song</span><span>Built as a record of work, not a list of buzzwords.</span></footer>
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
