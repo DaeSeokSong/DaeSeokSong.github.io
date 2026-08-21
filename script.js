@@ -1,10 +1,27 @@
 document.querySelectorAll('[data-tabs]').forEach((group) => {
   const buttons = [...group.querySelectorAll('[role="tab"]')];
   const panels = [...group.querySelectorAll('[role="tabpanel"]')];
-  buttons.forEach((button) => button.addEventListener('click', () => {
-    buttons.forEach((item) => item.setAttribute('aria-selected', String(item === button)));
+
+  function activate(button, moveFocus) {
+    buttons.forEach((item) => {
+      const selected = item === button;
+      item.setAttribute('aria-selected', String(selected));
+      item.tabIndex = selected ? 0 : -1;
+    });
     panels.forEach((panel) => { panel.hidden = panel.id !== button.getAttribute('aria-controls'); });
-  }));
+    if (moveFocus) button.focus();
+  }
+
+  buttons.forEach((button) => button.addEventListener('click', () => activate(button, false)));
+
+  group.querySelector('[role="tablist"]')?.addEventListener('keydown', (event) => {
+    const current = buttons.indexOf(document.activeElement);
+    if (current === -1) return;
+    const keys = { ArrowRight: current + 1, ArrowLeft: current - 1, Home: 0, End: buttons.length - 1 };
+    if (!(event.key in keys)) return;
+    event.preventDefault();
+    activate(buttons[(keys[event.key] + buttons.length) % buttons.length], true);
+  });
 });
 
 const chambers = [...document.querySelectorAll('.chamber')];
@@ -17,7 +34,10 @@ let activeChamber = 0;
 
 function selectChamber(index) {
   activeChamber = index;
-  chambers.forEach((chamber, chamberIndex) => chamber.classList.toggle('is-active', chamberIndex === index));
+  chambers.forEach((chamber, chamberIndex) => {
+    chamber.classList.toggle('is-active', chamberIndex === index);
+    chamber.setAttribute('aria-pressed', String(chamberIndex === index));
+  });
   const selected = chambers[index];
   demoTitle.textContent = selected.dataset.title;
   demoCopy.textContent = selected.dataset.copy;
@@ -67,4 +87,5 @@ copyButton?.addEventListener('click', async () => {
   }
 });
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+const yearEl = document.querySelector('#year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
