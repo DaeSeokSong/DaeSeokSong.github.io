@@ -53,8 +53,8 @@
       </aside>
 
       <ul class="signal-strip" aria-label="Selected results">
-        <li><strong>9 → 2</strong><span>production models consolidated</span></li>
-        <li><strong>3×</strong><span>faster inference pipeline</span></li>
+        <li><strong>10 → 2</strong><span>production models consolidated</span></li>
+        <li><strong>10.97×</strong><span>model-weight reduction</span></li>
         <li><strong>99.4–99.8%</strong><span>of swap-induced loss recovered</span></li>
         <li><strong>1</strong><span>peer-reviewed medical AI paper</span></li>
       </ul>
@@ -120,20 +120,16 @@
             <h3>AI Research Engineer · Early Team Member</h3>
             <p class="work-summary">Model research, clinical product integration, on-premise deployment, and regulatory evidence across the same product life cycle.</p>
             <div class="work-grid">
-              <div><strong>Multi-task systems</strong><p>Consolidated nine task-specific models into two uncertainty-aware, partial-label multi-task models, merging seven of them into a single backbone and reducing stored model-weight size by approximately 52% while maintaining target performance across internal evaluations.</p></div>
-              <div><strong>Deployment</strong><p>Established the MLOps and packaging pipeline; cut packaged engine size by 50%, accelerated inference 3×, and limited overall accuracy change to −0.06 percentage points.</p></div>
+              <div><strong>Multi-task systems</strong><p>Consolidated 10 production knee X-ray models into 2 uncertainty-aware, partial-label multi-task models, reducing stored weights by 10.97&times; and inference latency by 2.5&times;, with F-score kept within 0.003 of the original models.</p></div>
+              <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML); cut engine size by 47% and accelerated inference 3&times;, with clinical validation showing only a &minus;0.06 percentage-point accuracy change and 2.1% grade shifts (patient-level bootstrap non-inferiority).</p></div>
               <div><strong>Medical foundation models</strong><p>Prepared and indexed 100,000+ medical data records, and built a standard experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
-              <div><strong>Evidence and regulation</strong><p>Led technical evidence for Korea, UAE, EU CE MDR, and Singapore, while supporting Japan, U.S., and Deep-Tech TIPS preparation.</p></div>
+              <div><strong>Evidence and regulation</strong><p>Led technical evidence and regulatory submissions for CONNEVO KOA across Korea, the UAE, the EU (CE MDR), and Singapore (HSA).</p></div>
             </div>
             <details><summary>More engineering work <span>+</span></summary><ul>
-              <li>Built CT data and training pipelines from DICOM anonymization through SwinUNETR, DynUNet, and MedDINOv3 evaluation.</li>
-              <li>Reduced stored model weights by 5.26 GB through model-zoo comparison, pruning, quantization, and architecture changes.</li>
-              <li>Improved external-site accuracy by approximately 2–3 percentage points with classification and segmentation post-processing.</li>
-              <li>Met the clinical acceptance thresholds for K–L grade classification, reaching sensitivity and specificity of 0.85 or higher.</li>
-              <li>Implemented concurrent multi-input inference services with TorchServe and FastAPI for on-premise environments.</li>
-              <li>Conducted 8 classification, 5 detection, and 8 segmentation studies across hospital testbeds.</li>
-              <li>Contributed foundation-model evaluations and training-cost comparisons to a national R&amp;D project that was selected for funding.</li>
-              <li>Rebuilt the original clinician-authored model architecture and automated the labeling-to-training path when the product was handed over.</li>
+              <li>Built the CT data pipeline (DICOM anonymization to NRRD/ZARR) and a PyTorch Lightning + MONAI 3D segmentation framework (SwinUNETR, DynUNet, DINOv3), diagnosing and fixing a voxel-level class imbalance in osteophyte segmentation.</li>
+              <li>Tuned per-grade decision thresholds with Youden's J statistic across four tie-break strategies, surpassing an FDA-cleared competitor product's F-score on a matched evaluation.</li>
+              <li>Built an in-house MLOps console (GUI/CLI) with a two-stage hyperparameter search (LLM-agent proposals, then Optuna/TPE on plateau), raising detection mAP by 6.9 points (0.80&nbsp;&rarr;&nbsp;0.87); evaluated 12 agentic-workflow frameworks and selected LangGraph for orchestration.</li>
+              <li>Cut model re-onboarding time from 3h36m to 38m (5.7&times;) via caching, running the console's agents on vLLM (Qwen, Mistral).</li>
             </ul></details>
           </div>
         </article>
