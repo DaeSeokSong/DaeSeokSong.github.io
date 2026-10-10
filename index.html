@@ -53,7 +53,7 @@
       </aside>
 
       <ul class="signal-strip" aria-label="Selected results">
-        <li><strong>10 → 2</strong><span>production models consolidated</span></li>
+        <li><strong>11 → 3</strong><span>analysis models restructured</span></li>
         <li><strong>10.97×</strong><span>model-weight reduction</span></li>
         <li><strong>99.4–99.8%</strong><span>of swap-induced loss recovered</span></li>
         <li><strong>1</strong><span>peer-reviewed medical AI paper</span></li>
@@ -81,10 +81,10 @@
             </div>
             <div class="tab-panel" id="tab-evidence" role="tabpanel" aria-labelledby="evidence-tab">
               <p class="metric"><span>99.4–99.8%</span> of the performance lost under naive swaps was recovered after one-time representation alignment.</p>
-              <p>Result from two completed image-classification conditions, covering every directed donor-to-recipient pair among four separately trained models, and passing the pre-registered acceptance gate in every transfer tested. Preliminary, unpublished independent work.</p>
+              <p>Result from two completed image-classification conditions, covering the 12 ordered donor-to-recipient pairs among four separately trained models per condition. The pairs share the same four models, so they are not independent samples, and 12 pairs fall short of the pre-registered minimum of 20; I report ranges and do not generalize. Preliminary, unpublished independent work.</p>
             </div>
             <div class="tab-panel" id="tab-method" role="tabpanel" aria-labelledby="method-tab" hidden>
-              <p>Four models per condition shared the dataset, architecture, and role assignment but used different initializations. A 512-image validation set estimated one orthogonal Procrustes transform; transferred bullets were not retrained.</p>
+              <p>Four models per condition shared the dataset, architecture, and role assignment but used different initializations. A 512-image validation set estimated one mean-centered orthogonal Procrustes transform; transferred bullets were not retrained.</p>
             </div>
             <div class="tab-panel" id="tab-next" role="tabpanel" aria-labelledby="next-tab" hidden>
               <p>Test whether role ownership and transfer survive unseen data, unseen models, and new tasks. I also plan to study when a new chamber and bullet should be added, without treating that condition as a completed result.</p>
@@ -120,14 +120,14 @@
             <h3>AI Engineer · Early Team Member</h3>
             <p class="work-summary">Model research, clinical product integration, on-premise deployment, and regulatory evidence across the same product life cycle.</p>
             <div class="work-grid">
-              <div><strong>Multi-task systems</strong><p>Consolidated 10 production knee X-ray models into 2 uncertainty-aware, partial-label multi-task models, reducing stored weights by 10.97&times; and inference latency by 2.5&times;, with F-score kept within 0.003 of the original models.</p></div>
+              <div><strong>Multi-task systems</strong><p>Restructured an 11-model knee X-ray pipeline into 3 models (two uncertainty-aware, partial-label multi-task models plus one retained keypoint model), reducing stored weights by 10.97&times; and per-image wall-clock inference time by 2.5&times;, with the overall F1 difference under 0.004 versus the baseline model (single seed).</p></div>
               <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML); cut engine size by 47% and accelerated inference 3&times;, with clinical validation showing only a &minus;0.06 percentage-point accuracy change and 2.1% grade shifts (patient-level bootstrap non-inferiority).</p></div>
-              <div><strong>Medical foundation models</strong><p>Prepared and indexed 100,000+ medical data records, and built a standard experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
+              <div><strong>Medical foundation models</strong><p>Prepared and indexed medical data records, and built a standard experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
               <div><strong>Evidence and regulation</strong><p>Led technical evidence and regulatory submissions for CONNEVO KOA across Korea, the UAE, the EU (CE MDR), and Singapore (HSA).</p></div>
             </div>
             <details><summary>More engineering work <span>+</span></summary><ul>
               <li>Built the CT data pipeline (DICOM anonymization to NRRD/ZARR) and a PyTorch Lightning + MONAI 3D segmentation framework (SwinUNETR, DynUNet, DINOv3), diagnosing and fixing a voxel-level class imbalance in osteophyte segmentation.</li>
-              <li>Tuned per-grade decision thresholds with Youden's J statistic across four tie-break strategies, surpassing an FDA-cleared competitor product's F-score on a matched evaluation.</li>
+              <li>Tuned per-grade decision thresholds with Youden's J statistic across four tie-break strategies, surpassing an FDA-cleared competitor product's F1 on a matched evaluation.</li>
               <li>Built an in-house MLOps console (GUI/CLI) with a two-stage hyperparameter search (LLM-agent proposals, then Optuna/TPE on plateau), raising detection mAP by 6.9 points (0.80&nbsp;&rarr;&nbsp;0.87); evaluated 12 agentic-workflow frameworks and selected LangGraph for orchestration.</li>
               <li>Cut model re-onboarding time from 3h36m to 38m (5.7&times;) via caching, running the console's agents on vLLM (Qwen, Mistral).</li>
             </ul></details>
@@ -147,7 +147,7 @@
         <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">SCIE · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research · Devised and implemented the core ensemble algorithm; the paper reports an accuracy improvement of about 6%.</p><span class="publication-arrow">↗</span></a>
         <div class="publication reveal"><span class="publication-type">PATENT FAMILY · INVENTOR</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Application 10-2024-0124529 · PCT/KR2025/012689</p></div>
         <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2025</span><h3>Method and apparatus for generating joint images with an artificial intelligence model</h3><p>Korean Application 10-2025-0043898 · Generates a patient's projected knee state from the current radiograph and its K–L and OARSI grades.</p></div>
-        <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · SUBMITTED TO KSC 2022</span><h3>Image-size transformation augmentation for lesion segmentation in real-time medical imaging</h3><p>Improved DICE from 86.95 to 90.48.</p><span class="publication-arrow">↗</span></a>
+        <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · POSTER, KSC 2022</span><h3>Image-size transformation augmentation for lesion segmentation in real-time medical imaging</h3><p>Improved DICE from 86.95 to 90.48.</p><span class="publication-arrow">↗</span></a>
       </div>
     </section>
 
