@@ -53,8 +53,8 @@
       </aside>
 
       <ul class="signal-strip" aria-label="Selected results">
-        <li><strong>11 → 3</strong><span>analysis models restructured</span></li>
-        <li><strong>10.97×</strong><span>model-weight reduction</span></li>
+        <li><strong>10 → 2 + 1</strong><span>models consolidated, keypoint model added</span></li>
+        <li><strong>10.97×</strong><span>smaller stored weights</span></li>
         <li><strong>99.4–99.8%</strong><span>of swap-induced loss recovered</span></li>
         <li><strong>1</strong><span>peer-reviewed medical AI paper</span></li>
       </ul>
@@ -120,8 +120,8 @@
             <h3>AI Engineer · Early Team Member</h3>
             <p class="work-summary">Model research, clinical product integration, on-premise deployment, and regulatory evidence across the same product life cycle.</p>
             <div class="work-grid">
-              <div><strong>Multi-task systems</strong><p>Restructured an 11-model knee X-ray pipeline into 3 models (two uncertainty-aware, partial-label multi-task models plus one retained keypoint model), reducing stored weights by 10.97&times; and per-image wall-clock inference time by 2.5&times;, with the overall F1 difference under 0.004 versus the baseline model (single seed).</p></div>
-              <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML); cut engine size by 47% and accelerated inference 3&times;, with clinical validation showing only a &minus;0.06 percentage-point accuracy change and 2.1% grade shifts (patient-level bootstrap non-inferiority).</p></div>
+              <div><strong>Multi-task systems</strong><p>Consolidated 10 production knee X-ray models into 2 uncertainty-aware, partial-label multi-task models and added a keypoint model (3 models in total). Against the current product engine on the same CPU server and bilateral films, stored weights are 10.97&times; smaller (multi-task consolidation plus a tiny backbone) and per-image wall-clock inference time is 1.74&times; shorter; the overall F1 on evaluation sets from three external institutions did not drop (0.016 higher; single seed; the two models were trained on different data, so this is not a same-condition comparison).</p></div>
+              <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML); cut engine size by 47% and accelerated inference 3&times; relative to the same engine before optimization, with clinical validation showing only a &minus;0.06 percentage-point accuracy change and 2.1% grade shifts (patient-level bootstrap non-inferiority).</p></div>
               <div><strong>Medical foundation models</strong><p>Prepared and indexed medical data records, and built a standard experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
               <div><strong>Evidence and regulation</strong><p>Led technical evidence and regulatory submissions for CONNEVO KOA across Korea, the UAE, the EU (CE MDR), and Singapore (HSA).</p></div>
             </div>
