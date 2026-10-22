@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="DaeSeok Song is an AI engineer building production medical AI and researching replaceable, brain-inspired functional modules in neural networks.">
+  <meta name="description" content="DaeSeok Song is an AI engineer building production medical AI and researching replaceable functional modules in neural networks.">
   <meta name="author" content="DaeSeok Song">
   <meta name="theme-color" content="#f4f1e9">
   <title>DaeSeok Song — AI Engineer</title>
@@ -25,7 +25,7 @@
   <header class="site-header">
     <a class="wordmark" href="#top" aria-label="DaeSeok Song, home"><span class="wordmark-mark">DS</span><span>DaeSeok Song</span></a>
     <nav aria-label="Primary navigation">
-      <a href="#research">Research</a><a href="#work">Work</a><a href="#writing">Writing</a><a href="#background">Background</a>
+      <a href="#research">Research</a><a href="#work">Work</a><a href="#writing">Papers</a><a href="#background">Background</a>
     </nav>
     <a class="header-link" href="mailto:zxdsaqwe1231@naver.com">Contact ↗</a>
   </header>
@@ -47,7 +47,7 @@
         <img src="profile.jpg" alt="Portrait of DaeSeok Song" width="320" height="320">
         <dl>
           <div><dt>Current</dt><dd>Connecteve · AI Engineer</dd></div>
-          <div><dt>Focus</dt><dd>Brain-inspired modular learning</dd></div>
+          <div><dt>Focus</dt><dd>Modular neural networks: module swap, alignment, and Expert Synapse (design)</dd></div>
           <div><dt>Education</dt><dd>B.S. Information Security · Valedictorian</dd></div>
         </dl>
       </aside>
@@ -55,55 +55,147 @@
       <ul class="signal-strip" aria-label="Selected results">
         <li><strong>10 → 2 + 1</strong><span>models consolidated, keypoint model added</span></li>
         <li><strong>10.97×</strong><span>smaller stored weights</span></li>
-        <li><strong>99.4–99.8%</strong><span>of swap-induced loss recovered</span></li>
-        <li><strong>1</strong><span>peer-reviewed medical AI paper</span></li>
+        <li><strong>99.4–99.8%</strong><span>of swap-induced loss recovered (CIFAR-10, single seed)</span></li>
+        <li><strong>3</strong><span>co-authored medical AI papers (journal 2024 · MICCAI 2026 published · FMLDS 2026 accepted)</span></li>
       </ul>
     </section>
 
     <section class="section research-section" id="research">
       <div class="section-heading reveal">
         <p class="section-index">01 / CURRENT RESEARCH</p>
-        <h2>RevolverNet</h2>
-        <p>A testbed for learning, routing, removing, and replacing functional subnetworks.</p>
+        <h2>Swappable modules</h2>
+        <p>Can a trained network hand a functional part to another network without relearning everything? Two lines of work: a preliminary measured result, and a design in progress.</p>
+      </div>
+
+      <div class="lines reveal">
+        <article class="line-card">
+          <p class="line-tag"><span>LINE 1</span> Measured &middot; preliminary</p>
+          <h3>Module swap &amp; alignment</h3>
+          <p>Swap a module between separately trained image classifiers. Naive swaps cost accuracy; an orthogonal Procrustes alignment, with no retraining, recovered 99.4&ndash;99.8% of that loss in three structures (CIFAR-10, single seed 42).</p>
+          <button type="button" class="line-link" data-open-tab="evidence-tab">See the evidence <span aria-hidden="true">&darr;</span></button>
+        </article>
+        <article class="line-card is-design">
+          <p class="line-tag"><span>LINE 2</span> In design &middot; no results yet</p>
+          <h3>Expert Synapse</h3>
+          <p>Keep a large pretrained vision transformer frozen and link experts on its blocks to a task head, so that a head trained on one backbone can attach to an unseen backbone without retraining. Stage 0 is under way; the main runs have not started.</p>
+          <button type="button" class="line-link" data-open-tab="next-tab">See the design <span aria-hidden="true">&darr;</span></button>
+        </article>
       </div>
 
       <div class="research-grid">
         <div class="research-story reveal">
-          <p class="lead">A <strong>bullet</strong> is a detachable subnetwork trained to own one or more classes or functions. A <strong>chamber</strong> is the slot that receives it. A <strong>trigger</strong> routes each input to the responsible bullet.</p>
-          <p>The metaphor is practical: I want to rotate through specialized modules during learning and inference, then remove or replace one and measure exactly which behavior changes. The long-term goal is not only a smaller model, but an AI system whose functional parts people can inspect and control.</p>
-          <p>The question grew out of re-reading Hinton's GLOM and Forward-Forward work and asking what it would take for a learning system to be modular and biologically plausible while staying cheap in memory and energy. I checked the derivations and architectural claims against the literature using an agent harness I built for that purpose, then implemented and trained the design myself.</p>
+          <p class="lead">The long-term aim is an AI system whose functional parts people can inspect, replace, and eventually remove. Today&rsquo;s results cover swapping and alignment only: I have not yet measured whether removing a module suppresses an unwanted behavior.</p>
+          <p>The swap work runs on a test bed I call RevolverNet. It starts from the Plug-in modules idea in my 2024 KSRR paper (second author; the paper&rsquo;s author statement lists data acquisition and interpretation, while I carried out the algorithm work end to end); the experiments here are independent work. The broader question grew out of re-reading Hinton&rsquo;s GLOM and Forward-Forward work and asking what it would take for a learning system to be modular while staying cheap in memory and energy. I checked the derivations and architectural claims against the literature using an agent harness I built for that purpose, then implemented and trained the design myself.</p>
+          <p>The two lines meet in one place: the closed-form orthogonal Procrustes alignment from line 1 is one of the four controls that Expert Synapse is compared against.</p>
 
           <div class="research-tabs" data-tabs>
-            <div class="tab-list" role="tablist" aria-label="RevolverNet research details">
+            <div class="tab-list" role="tablist" aria-label="Research details">
               <button type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-evidence" id="evidence-tab">Evidence</button>
               <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-method" id="method-tab">Method</button>
-              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-next" id="next-tab">Next</button>
+              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-next" id="next-tab">Expert Synapse</button>
             </div>
             <div class="tab-panel" id="tab-evidence" role="tabpanel" aria-labelledby="evidence-tab">
-              <p class="metric"><span>99.4–99.8%</span> of the performance lost under naive swaps was recovered after one-time representation alignment.</p>
-              <p>Result from two completed image-classification conditions, using four separately trained models per condition. Preliminary, unpublished independent work.</p>
+              <p class="metric"><span>99.4&ndash;99.8%</span> of the performance lost under naive swaps was recovered by an orthogonal Procrustes alignment with no retraining, in each of three completed structures (99.41, 99.84 and 99.63% before rounding; CIFAR-10, single seed 42).</p>
+              <div class="result-wrap" tabindex="0" role="region" aria-label="Swap results for the three structures"><table class="result-table">
+                <caption>Test accuracy (%) for swaps over every donor&rarr;recipient pair among four models (CIFAR-10, seed 42). Intact = no swap; naive = swapped without alignment.</caption>
+                <thead><tr><th scope="col">Structure</th><th scope="col">Intact</th><th scope="col">Naive swap</th><th scope="col">Aligned swap</th><th scope="col">Recovered</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">A &middot; hierarchical readout, no router</th><td>90.1</td><td>38.0</td><td>89.8</td><td>99.4%</td></tr>
+                  <tr><th scope="row">B &middot; router trained from the start (hard gating)</th><td>89.2</td><td>39.1</td><td>89.1</td><td>99.8%</td></tr>
+                  <tr><th scope="row">C &middot; B plus an &ldquo;unknown&rdquo; option</th><td>71.3</td><td>33.9</td><td>71.2</td><td>99.6%</td></tr>
+                </tbody>
+              </table></div>
+              <p class="fine">Two-module image classification; preliminary, unpublished independent work. Aligned swaps stay slightly below the intact models (by 0.3, 0.1 and 0.1 points). C scores lower in absolute terms because two held-out classes are trained to be rejected and count as errors, so accuracies are not comparable across structures, and I make no claim about detecting unknown inputs.</p>
+              <p class="fine">Not yet tested for this result: whether it holds across different datasets, architectures, or class assignments (follow-ups I have deferred while working on Expert Synapse), and when a new chamber and bullet should be added. None of these is a completed result.</p>
             </div>
             <div class="tab-panel" id="tab-method" role="tabpanel" aria-labelledby="method-tab" hidden>
-              <p>Four models per condition shared the dataset, architecture, and role assignment but used different initializations. A 512-image validation set estimated one mean-centered orthogonal Procrustes transform; transferred bullets were not retrained.</p>
+              <p>The test bed is RevolverNet. A <strong>bullet</strong> is a detachable subnetwork trained to own one or more classes. A <strong>chamber</strong> is the slot that receives it. A <strong>trigger</strong> routes each input to the responsible bullet in the structures that have a router (B and C); structure A reads out hierarchically without one. The schematic shows the idea.</p>
+              <p>In each structure, four models shared the dataset, architecture, and role assignment (roles were assigned by me, not learned) and differed only in initialization (Kaiming, orthogonal, uniform, sparse; one fixed seed, 42). Every directed donor-to-recipient pair among the four was swapped. For each swap, a mean-centered orthogonal Procrustes transform was computed from the donor and recipient modules&rsquo; outputs on the same input images; transferred bullets were not retrained, and every accuracy is measured on the full test set.</p>
+              <p class="fine">Recovery is a share of what naive swapping lost, not of the original accuracy. Independence holds only along the initialization axis: the result shows that mismatched coordinates are one cause of swap failure, not that modules are compatible across datasets or architectures, and no ranking between structures is claimed. Every figure comes from one seed (42), so run-to-run variation was not measured. Aligning independently trained networks already has a literature (model stitching, re-basin, relative representations), so I do not claim the alignment result as new.</p>
             </div>
             <div class="tab-panel" id="tab-next" role="tabpanel" aria-labelledby="next-tab" hidden>
-              <p>Test whether role ownership and transfer survive unseen data, unseen models, and new tasks. I also plan to study when a new chamber and bullet should be added, without treating that condition as a completed result.</p>
+              <p class="metric"><span>In design</span> Expert Synapse has no results yet on performance, transplant, or emergence.</p>
+              <p>A large pretrained vision transformer stays frozen. At each backbone block I attach a small bundle of experts, and a task head gets its own entrance experts. Features are rewritten as similarities to a fixed set of anchor tokens (relative representations, Moschella et al., 2023), and the two sides are linked through &ldquo;signatures&rdquo;, meaning how each expert responds to those anchors. The link is computed once when a head is moved, not relearned. The aim is for a head trained on one backbone to attach to a different, unseen backbone without retraining.</p>
+              <p>Four controls sit in the same slot: (a) a learned adapter layer per backbone pair, (b) a closed-form orthogonal Procrustes translation, which is the alignment used in the swap result, (c) relative representations alone, and (d) experts alone. Success criteria and tolerances are written in the approved design document before the main runs, the test bed is public COCO 2017 (box, mask, and keypoint heads), and a negative outcome will be reported as one.</p>
+              <p class="fine">Status: stage 0 (head choice, per-block probes, sanity checks) is under way and the main runs have not started. The design follows two routes I closed after they missed their pre-set bars: a learned translator into a shared feature space, and a fixed &ldquo;convention&rdquo; encoder. I do not claim novelty over relative representations (Moschella et al., 2023) or closed-form Procrustes translation between models (Maiorca et al., 2023). I do not claim emergent modularity either: the anchor form and routing rules are imposed by design, and whether roles emerge from learning alone is untested.</p>
             </div>
           </div>
         </div>
 
-        <div class="revolver-demo reveal" role="group" aria-label="Interactive RevolverNet concept diagram">
-          <div class="demo-label"><span>INTERACTIVE SCHEMATIC</span><span id="demo-state">role_a.selected</span></div>
-          <div class="demo-canvas">
-            <button class="trigger-button" type="button" id="trigger-button" aria-label="Rotate to the next chamber"><span>TRIGGER</span><b>↻</b></button>
-            <div class="route-line" aria-hidden="true"></div>
-            <div class="cylinder" id="cylinder">
-              <button class="chamber is-active" type="button" aria-pressed="true" aria-label="Role A bullet" data-title="Role A bullet" data-copy="A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed."><span aria-hidden="true">A</span></button>
-              <button class="chamber" type="button" aria-pressed="false" aria-label="Role B bullet" data-title="Role B bullet" data-copy="A separately trained functional subnetwork. Hard routing lets its output affect only the inputs assigned to it."><span aria-hidden="true">B</span></button>
-              <button class="chamber chamber-open" type="button" aria-pressed="false" aria-label="Open chamber" data-title="Open chamber" data-copy="A future slot for a new function. Deciding when to add it remains planned work, not a completed result."><span aria-hidden="true">+</span></button>
+        <div class="schematic-col reveal">
+          <div class="revolver-demo" data-for="tab-evidence tab-method" role="group" aria-label="Interactive RevolverNet test-bed diagram">
+            <div class="demo-label"><span>TEST BED &middot; REVOLVERNET</span><span id="demo-state">role_a.selected</span></div>
+            <div class="demo-canvas">
+              <button class="trigger-button" type="button" id="trigger-button" aria-label="Rotate to the next chamber"><span>TRIGGER</span><b>&#8635;</b></button>
+              <div class="route-line" aria-hidden="true"></div>
+              <div class="cylinder" id="cylinder">
+                <button class="chamber is-active" type="button" aria-pressed="true" aria-label="Role A bullet" data-title="Role A bullet" data-copy="A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed."><span aria-hidden="true">A</span></button>
+                <button class="chamber" type="button" aria-pressed="false" aria-label="Role B bullet" data-title="Role B bullet" data-copy="A separately trained functional subnetwork. Hard routing lets its output affect only the inputs assigned to it."><span aria-hidden="true">B</span></button>
+                <button class="chamber chamber-open" type="button" aria-pressed="false" aria-label="Open chamber" data-title="Open chamber" data-copy="A future slot for a new function. Deciding when to add it remains planned work, not a completed result."><span aria-hidden="true">+</span></button>
+              </div>
             </div>
+            <div class="demo-readout" aria-live="polite"><span>ACTIVE</span><h3 id="demo-title">Role A bullet</h3><p id="demo-copy">A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed.</p></div>
           </div>
-          <div class="demo-readout" aria-live="polite"><span>ACTIVE</span><h3 id="demo-title">Role A bullet</h3><p id="demo-copy">A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed.</p></div>
+
+          <div class="synapse-demo" id="synapse-demo" data-for="tab-next" data-state="trained" role="group" aria-label="Expert Synapse design sketch" hidden>
+            <div class="demo-label"><span>DESIGN SKETCH &middot; NO RESULTS</span><span id="syn-state">design.no_results</span></div>
+            <div class="synapse-canvas">
+              <svg viewBox="0 0 420 300" role="img" aria-labelledby="syn-svg-title syn-svg-desc">
+                <title id="syn-svg-title">Expert Synapse design sketch</title>
+                <desc id="syn-svg-desc">A frozen backbone with a bundle of experts at each block. Links, set from each expert&rsquo;s response to fixed anchor tokens, connect them to entrance experts of a task head. Design only; no results.</desc>
+
+                <text class="syn-cap" x="16" y="20"><tspan class="only-a">BACKBONE A</tspan><tspan class="only-b">BACKBONE B</tspan></text>
+                <text class="syn-note" x="16" y="33">frozen</text>
+                <text class="syn-cap" x="128" y="20">EXPERTS</text>
+                <text class="syn-cap" x="258" y="20">ENTRANCE</text>
+                <text class="syn-cap" x="324" y="20">HEAD</text>
+
+                <g class="syn-links" fill="none">
+                  <path class="syn-link" d="M192 70 C232 70 228 85 266 85"/>
+                  <path class="syn-link" d="M192 70 C236 70 226 145 266 145"/>
+                  <path class="syn-link" d="M192 130 C232 130 228 145 266 145"/>
+                  <path class="syn-link" d="M192 130 C236 130 226 205 266 205"/>
+                  <path class="syn-link" d="M192 210 C232 210 228 205 266 205"/>
+                </g>
+
+                <g>
+                  <rect class="syn-block" x="16" y="48" width="92" height="44"/><text class="syn-t" x="62" y="75" text-anchor="middle">block 1</text>
+                  <rect class="syn-block" x="16" y="108" width="92" height="44"/><text class="syn-t" x="62" y="135" text-anchor="middle">block 2</text>
+                  <circle class="syn-dot" cx="62" cy="164" r="1.8"/><circle class="syn-dot" cx="62" cy="171" r="1.8"/><circle class="syn-dot" cx="62" cy="178" r="1.8"/>
+                  <rect class="syn-block" x="16" y="188" width="92" height="44"/><text class="syn-t" x="62" y="215" text-anchor="middle">block N</text>
+                </g>
+
+                <g>
+                  <circle class="syn-exp" cx="138" cy="70" r="7"/><circle class="syn-exp" cx="158" cy="70" r="7"/><circle class="syn-exp" cx="178" cy="70" r="7"/>
+                  <circle class="syn-exp" cx="138" cy="130" r="7"/><circle class="syn-exp" cx="158" cy="130" r="7"/><circle class="syn-exp" cx="178" cy="130" r="7"/>
+                  <circle class="syn-exp" cx="138" cy="210" r="7"/><circle class="syn-exp" cx="158" cy="210" r="7"/><circle class="syn-exp" cx="178" cy="210" r="7"/>
+                </g>
+                <path class="syn-tie" d="M108 70 H131 M108 130 H131 M108 210 H131" fill="none"/>
+
+                <g>
+                  <rect class="syn-entr" x="268" y="73" width="24" height="24"/>
+                  <rect class="syn-entr" x="268" y="133" width="24" height="24"/>
+                  <rect class="syn-entr" x="268" y="193" width="24" height="24"/>
+                </g>
+                <path class="syn-tie" d="M292 85 H324 M292 145 H324 M292 205 H324" fill="none"/>
+                <rect class="syn-head" x="324" y="58" width="80" height="170"/>
+                <text class="syn-head-t" x="364" y="140" text-anchor="middle">task</text>
+                <text class="syn-head-t" x="364" y="154" text-anchor="middle">head</text>
+                <text class="syn-note" x="364" y="246" text-anchor="middle"><tspan class="only-a">trained here</tspan><tspan class="only-b">same head</tspan></text>
+                <text class="syn-note" x="364" y="258" text-anchor="middle"><tspan class="only-b">not retrained</tspan></text>
+
+                <text class="syn-cap" x="16" y="262">ANCHOR TOKENS (FIXED)</text>
+                <g>
+                  <rect class="syn-anchor" x="16" y="268" width="10" height="10"/><rect class="syn-anchor" x="32" y="268" width="10" height="10"/><rect class="syn-anchor" x="48" y="268" width="10" height="10"/>
+                  <rect class="syn-anchor" x="64" y="268" width="10" height="10"/><rect class="syn-anchor" x="80" y="268" width="10" height="10"/><rect class="syn-anchor" x="96" y="268" width="10" height="10"/>
+                </g>
+                <text class="syn-note" x="132" y="274">signature = how an expert</text>
+                <text class="syn-note" x="132" y="286">responds to the anchors</text>
+              </svg>
+              <button class="button syn-toggle" type="button" id="syn-toggle">Attach to backbone B</button>
+            </div>
+            <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 id="syn-title">Head trained on backbone A</h3><p id="syn-copy">Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.</p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -120,16 +212,16 @@
             <h3>AI Engineer · Early Team Member</h3>
             <p class="work-summary">Model research, clinical product integration, on-premise deployment, and regulatory evidence across the same product life cycle.</p>
             <div class="work-grid">
-              <div><strong>Multi-task systems</strong><p>Consolidated 10 production knee X-ray models into 2 uncertainty-aware, partial-label multi-task models and added a keypoint model (3 models in total). Against the current product engine on the same CPU server and bilateral films, stored weights are 10.97&times; smaller (multi-task consolidation plus a tiny backbone) and per-image wall-clock inference time is 1.74&times; shorter; the overall F1 on evaluation sets from three external institutions did not drop (0.016 higher; single seed).</p></div>
-              <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML); cut engine size by 47% and accelerated inference 3&times; relative to the same engine before optimization, with clinical validation showing only a &minus;0.06 percentage-point accuracy change and 2.1% grade shifts (patient-level bootstrap non-inferiority).</p></div>
-              <div><strong>Medical foundation models</strong><p>Prepared and indexed medical data records, and built a standard experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
-              <div><strong>Evidence and regulation</strong><p>Led technical evidence and regulatory submissions for CONNEVO KOA across Korea, the UAE, the EU (CE MDR), and Singapore (HSA).</p></div>
+              <div><strong>Multi-task systems</strong><p>Consolidated 10 production knee X-ray models into 2 uncertainty-aware, partial-label multi-task models and added a keypoint model (3 models in total). Against the current product engine on the same CPU server and bilateral films, stored weights are 10.97&times; smaller (multi-task consolidation plus a tiny backbone) and per-image wall-clock inference time is 1.74&times; shorter; the overall F1 on evaluation sets from three external institutions did not drop (0.016 higher; single seed). A custom data loader lets a batch train even when not every sample carries every task&rsquo;s label.</p></div>
+              <div><strong>Deployment</strong><p>Rebuilt the optimization-to-serving line (ONNX, 16-bit inference, BentoML): relative to the same engine before optimization, engine size fell 47% and inference ran 3&times; faster, with a &minus;0.06 percentage-point accuracy change on clinical comparison data. These were measured on the earlier 10-model engine, so they are reported separately from the consolidation figures above and are not multiplied with them.</p></div>
+              <div><strong>Medical foundation models</strong><p>Converted medical data records into train-ready formats with a preprocessing process and database, and built a standard PyTorch Lightning experiment pipeline over DINOv3 and Rad-DINO with selectable linear probing or LoRA adaptation.</p></div>
+              <div><strong>Evidence and regulation</strong><p>Led authoring of the AI technical documentation for CONNEVO KOA and took part in the full approval process: cleared in Korea, approved in the UAE, CE MDR certified, and granted by Singapore HSA; FDA process in progress. Also handled technical documentation and third-party testing for a deep-tech TIPS program.</p></div>
             </div>
             <details><summary>More engineering work <span>+</span></summary><ul>
-              <li>Built the CT data pipeline (DICOM anonymization to NRRD/ZARR) and a PyTorch Lightning + MONAI 3D segmentation framework (SwinUNETR, DynUNet, DINOv3), diagnosing and fixing a voxel-level class imbalance in osteophyte segmentation.</li>
-              <li>Tuned per-grade decision thresholds with Youden's J statistic across four tie-break strategies, surpassing an FDA-cleared competitor product's F1 on a matched evaluation.</li>
-              <li>Built an in-house MLOps console (GUI/CLI) with a two-stage hyperparameter search (LLM-agent proposals, then Optuna/TPE on plateau), raising detection mAP by 6.9 points (0.80&nbsp;&rarr;&nbsp;0.87); evaluated 12 agentic-workflow frameworks and selected LangGraph for orchestration.</li>
-              <li>Cut model re-onboarding time from 3h36m to 38m (5.7&times;) via caching, running the console's agents on vLLM (Qwen, Mistral).</li>
+              <li>Built the CT data pipeline (anonymization, DICOM to NRRD) and a PyTorch Lightning + uv train/val/test pipeline that compared SwinUNETR, DynUNet, and DINOv3 segmentation models and passed the segmentation performance bar; also studied loading-speed differences across data formats (Zarr, HDF5, NPZ, NRRD) and class-wise voxel imbalance.</li>
+              <li>Tuned per-grade decision thresholds with Youden's J statistic across four tie-break strategies, reaching or exceeding the F1 of an FDA-cleared competitor product on a matched evaluation.</li>
+              <li>Built an in-house MLOps console (GUI/CLI) covering training, optimization, packaging, and serving, with a two-stage hyperparameter search (LLM-agent proposals, then Optuna/TPE after ten stalled rounds); in a from-scratch knee-detection run, the switch to Optuna lifted mAP by 6.7 points (0.8022&nbsp;&rarr;&nbsp;0.8693). Evaluated 12 agentic-workflow frameworks and selected LangGraph for orchestration.</li>
+              <li>Reworked the deployment pipeline into an agentic workflow on vLLM (Qwen, Mistral) as an automation proof of concept; caching cut re-onboarding from 3h36m (cold) to 38m (warm), a 5.7&times; reduction.</li>
             </ul></details>
           </div>
         </article>
@@ -142,12 +234,14 @@
     </section>
 
     <section class="section dark-section" id="writing">
-      <div class="section-heading reveal"><p class="section-index">03 / PUBLISHED WORK</p><h2>Research that reached the real world</h2></div>
+      <div class="section-heading reveal"><p class="section-index">03 / PUBLICATIONS</p><h2>Papers and patent applications</h2></div>
       <div class="publication-list">
-        <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">SCIE · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research · Devised and implemented the core ensemble algorithm; the paper reports an accuracy improvement of about 6%.</p><span class="publication-arrow">↗</span></a>
-        <div class="publication reveal"><span class="publication-type">PATENT FAMILY · INVENTOR</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Application 10-2024-0124529 · PCT/KR2025/012689</p></div>
-        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2025</span><h3>Method and apparatus for generating joint images with an artificial intelligence model</h3><p>Korean Application 10-2025-0043898 · Generates a patient's projected knee state from the current radiograph and its K–L and OARSI grades.</p></div>
-        <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · POSTER, KSC 2022</span><h3>Image size transformation data augmentation method for lesion segmentation on normalization and augmentation medical images</h3><p>Improved DICE from 86.95 to 90.48.</p><span class="publication-arrow">↗</span></a>
+        <a class="publication reveal" href="https://doi.org/10.1007/978-3-032-38236-8_8" target="_blank" rel="noreferrer"><span class="publication-type">MICCAI 2026 · THIRD AUTHOR · PUBLISHED · POSTER PRESENTED</span><h3>Beyond Landmarks: Anchor-Guided Orientation Regression for Robust Spinopelvic Measurement</h3><p>Springer LNCS, September 2026; presented as a poster at the conference (Sep 27 – Oct 1, 2026). Predicts an anchor and a direction vector instead of paired landmarks; the paper reports mean angle error falling from 2.32° to 2.18° on external validation images (ConvNeXt).</p><span class="publication-arrow">↗</span></a>
+        <div class="publication reveal"><span class="publication-type">IEEE FMLDS 2026 · THIRD AUTHOR · ACCEPTED · POSTER IN NOVEMBER</span><h3>Image-Only Acquisition Triage for Orthopedic AI: Avoiding Unreliable DICOM Metadata and Circular Validation</h3><p>Accepted; camera-ready version submitted. Poster planned for the conference (Nov 20–23, 2026, Kobe, Japan). Predicts acquisition factors from pixels alone instead of unreliable DICOM metadata, and checks the model against references independent of the metadata its labels came from.</p></div>
+        <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">JOURNAL · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research, August 2024 · The paper&rsquo;s author statement lists my contribution as data acquisition and interpretation; in practice I carried out the algorithm work end to end, from devising the method to implementation, training and experiments, and I am a named co-inventor on the related patent application below. The paper reports 75.7% accuracy for the ensemble on an independent test set, against 62.0–72.8% for the individual models.</p><span class="publication-arrow">↗</span></a>
+        <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · POSTER · KSC 2022</span><h3>Image size transformation data augmentation method for lesion segmentation on normalization and augmentation medical images</h3><p>Korea Software Congress, December 2022 · On a foot-wound segmentation dataset, combining image-size transformation variants raised mean test Dice from 86.95 to 90.48 (10-run mean).</p><span class="publication-arrow">↗</span></a>
+        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2024</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Application 10-2024-0124529 · PCT/KR2025/012689 · pending</p></div>
+        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2025</span><h3>Method and apparatus for generating joint images with an artificial intelligence model</h3><p>Korean Application 10-2025-0043898 · Generates a patient&rsquo;s projected knee state from the current radiograph and its K–L and OARSI grades.</p></div>
       </div>
     </section>
 
@@ -155,7 +249,7 @@
       <div class="section-heading reveal"><p class="section-index">04 / BACKGROUND</p><h2>Built from fundamentals</h2></div>
       <div class="background-grid">
         <article class="education-block reveal"><span class="block-label">EDUCATION</span><h3>University of Suwon</h3><p>B.S. in Information Security · 2023</p><strong>Valedictorian</strong><dl><div><dt>Overall GPA</dt><dd>4.29 / 4.50</dd></div><div><dt>Major GPA</dt><dd>4.37 / 4.50</dd></div></dl></article>
-        <article class="stack-block reveal"><span class="block-label">WORKING STACK</span><div class="stack-lines"><p><span>research</span> controlled ablations · representation analysis · reproducibility</p><p><span>models</span> PyTorch · multi-task learning · medical vision · uncertainty</p><p><span>systems</span> Hydra · Lightning · ONNX · FastAPI · MLOps · DICOM</p><p><span>code</span> Python · C/C++</p><p><span>spoken</span> Korean (native) · English · Japanese</p></div></article>
+        <article class="stack-block reveal"><span class="block-label">WORKING STACK</span><div class="stack-lines"><p><span>research</span> controlled ablations · representation analysis · reproducibility</p><p><span>models</span> PyTorch · multi-task learning · medical vision · uncertainty</p><p><span>systems</span> Hydra · Lightning · ONNX · FastAPI · MLOps · DICOM</p><p><span>code</span> Python · C/C++</p><p><span>spoken</span> Korean (native) · English (conversational) · Japanese (conversational)</p></div></article>
       </div>
 
       <details class="earlier-work reveal"><summary><span>Selected earlier work</span><span>Open archive +</span></summary><div class="archive-grid">
@@ -167,7 +261,7 @@
     </section>
 
     <section class="contact-section">
-      <div class="contact-copy reveal"><p class="section-index">05 / CONTACT</p><h2>Interested in modular intelligence, robust learning, or medical AI?</h2><p>I am preparing for graduate study on how learning systems can be built from parts that are separable, reusable, and open to inspection. I am glad to walk through the RevolverNet setup and its limits in detail, and I can share the full protocol on request.</p></div>
+      <div class="contact-copy reveal"><p class="section-index">05 / CONTACT</p><h2>Interested in modular intelligence, robust learning, or medical AI?</h2><p>I am preparing for graduate study on how learning systems can be built from parts that are separable, reusable, and open to inspection. I am glad to walk through the module-swap experiments and the Expert Synapse design, with their limits, in detail, and I can share the full swap-experiment protocol on request.</p></div>
       <div class="contact-actions reveal"><a class="button primary" href="mailto:zxdsaqwe1231@naver.com">Send email</a><button class="button" id="copy-email" type="button" data-email="zxdsaqwe1231@naver.com">Copy address</button><a class="text-link" href="https://www.linkedin.com/in/daeseok-song/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a class="text-link" href="https://github.com/DaeSeokSong" target="_blank" rel="noreferrer">GitHub ↗</a></div>
     </section>
   </main>
