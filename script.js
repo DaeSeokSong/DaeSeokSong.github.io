@@ -44,6 +44,14 @@ document.querySelectorAll('.fig').forEach((fig) => {
   const title = fig.querySelector('.fig-title');
   const copy = fig.querySelector('.fig-copy');
   const label = fig.querySelector('.fig-state');
+  fig.querySelectorAll('[data-pick]').forEach((node) => {
+    const target = buttons.find((item) => item.dataset.setState === `pick${node.dataset.pick}`);
+    if (!target) return;
+    node.addEventListener('click', () => target.click());
+    node.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); target.click(); }
+    });
+  });
   buttons.forEach((button) => {
     button.addEventListener('click', () => {
       fig.dataset.state = button.dataset.setState;

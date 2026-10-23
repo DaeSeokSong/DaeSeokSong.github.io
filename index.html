@@ -69,7 +69,7 @@
 
       <div class="research-intro reveal">
         <p class="lead">The long-term aim is an AI system whose parts people can inspect, replace, and when necessary remove. What I have measured so far is narrower: that parts can be swapped and aligned. Pick a line to see its idea, its architecture, and what the experiments have shown so far.</p>
-        <p class="origin">It started from the Plug-in modules idea in my 2024 KSRR paper (second author; the paper&rsquo;s author statement lists my contribution as data acquisition and interpretation, and I carried out the algorithm work from devising the method through implementation, training and experiments). Lines 1 and 3 use public datasets only; line 2 grew out of a problem in my day job. The wider question came from re-reading Hinton&rsquo;s GLOM and Forward-Forward work and asking what it would take for a learning system to be modular while staying cheap in memory and energy. I built a research harness on Claude Code (agents, skills and hooks) to check derivations and architectural claims against the literature. I set the questions, the pre-registered criteria and the decisions.</p>
+        <p class="origin">It started from the Plug-in modules idea in my 2024 KSRR paper (second author; the paper&rsquo;s author statement lists my contribution as data acquisition and interpretation, and I carried out the algorithm work from devising the method through implementation, training and experiments). Lines 1 and 3 use public datasets only; line 2 grew out of a problem in my day job. The wider question came from re-reading Hinton&rsquo;s GLOM and Forward-Forward work and asking what it would take for a learning system to be modular while staying cheap in memory and energy. I run my work through a harness I built myself, which makes research and engineering more efficient and easier to check; the public, sanitized version is <a href="https://github.com/DaeSeokSong/oh-my-ouroboros" target="_blank" rel="noreferrer">oh-my-ouroboros</a>. I set the questions, the pre-registered criteria and the decisions.</p>
       </div>
 
       <div class="research-tabs reveal" data-tabs>
@@ -101,7 +101,11 @@
               <p>A classifier is split into slots. Each slot holds a module, which I call a bullet, that owns a group of classes and has its own readout. A router, the trigger, sends each input to the responsible slot. The cylinder is the set of slots, a chamber is one slot, and loading means putting a new bullet into an empty chamber. Two questions: can a module from another network be swapped in, and can a new module be loaded into an empty slot while the loaded ones stay untouched?</p>
 
               <h4>How it works</h4>
-              <p>The class groups are assigned by me before training, so the modularity is imposed by structure, not learned. A naive swap fails because two networks trained from different initializations use different feature coordinates. An orthogonal rotation estimated from the two modules&rsquo; outputs on the same 512 input images from a validation split (orthogonal Procrustes) maps one set of coordinates onto the other with no retraining. Loading freezes the loaded modules and their readouts and trains only the new module; the router may be re-tuned.</p>
+              <ul class="result-list compact">
+                <li>Class groups are assigned before training: the modularity is imposed, not learned.</li>
+                <li>Naive swaps fail because separately trained networks use different feature coordinates.</li>
+                <li>An orthogonal rotation fitted on shared validation inputs aligns them, with no retraining.</li>
+              </ul>
 
               <h4>Results so far</h4>
               <p class="metric"><span>99.4&ndash;99.8%</span> of the accuracy lost under naive swaps was recovered by the rotation, with no retraining, in each of three structures (99.41, 99.84 and 99.63% before rounding; CIFAR-10, single seed 42).</p>
@@ -114,11 +118,11 @@
                   <tr><th scope="row">C &middot; B plus an &ldquo;unknown&rdquo; option</th><td>71.3</td><td>33.9</td><td>71.2</td><td>99.6%</td></tr>
                 </tbody>
               </table></div>
-              <p class="fine">Two-module image classification. In each structure the four models shared the dataset, architecture and role assignment and differed only in initialization (Kaiming, orthogonal, uniform, sparse). Recovery is a share of what naive swapping lost, not of the original accuracy. Aligned swaps stay slightly below the intact models (by 0.3, 0.1 and 0.1 points). C scores lower in absolute terms because two held-out classes are trained to be rejected and count as errors, so accuracies are not comparable across structures, and I make no claim about detecting unknown inputs.</p>
-              <ul class="result-list">
-                <li><strong>Initialization alone did not make naive swaps work.</strong> In an earlier test on a mixture-of-experts variant, naive swaps stayed near 38% (37.7&ndash;38.0%) whether the models shared an initialization, were initialized independently, or shared one for five epochs before diverging (three runs per condition; CIFAR-10, two modules). Orthogonal alignment then brought them to 89.6&ndash;90.3%, level with the intact models (89.7&ndash;90.3%). Alignment is still setting-dependent: with a standard backbone trained by backpropagation on CIFAR-100 (two modules, three seeds), naive swaps were already close to intact (64.5&ndash;64.7% against 65.1&ndash;65.5%).</li>
-                <li><strong>An earlier five-seed proof of concept</strong> recovered 86% of the loss, 9.9 points above a control that applied the same rotation to the opposite module. Its pre-set verdict was partial success; a three-seed look had suggested full success before the extra seeds corrected it.</li>
-                <li><strong>One attempt failed its pre-set check:</strong> a learned &ldquo;unknown&rdquo; output meant to signal when a new module is needed (it over-selected &ldquo;unknown&rdquo;).</li>
+              <p class="fine">Two-module classifier; the four models differ only in initialization. Recovery is the share of the naive-swap loss regained. C is lower in absolute terms because two classes are trained to be rejected (no claim about detecting unknown inputs).</p>
+              <ul class="result-list compact">
+                <li><strong>Initialization alone did not fix naive swaps</strong> (about 38%); alignment matched the intact models, though on a standard CIFAR-100 backbone naive swaps were already close.</li>
+                <li><strong>An earlier five-seed pilot</strong> recovered 86% of the loss; a three-seed look had overstated it.</li>
+                <li><strong>A learned &ldquo;unknown&rdquo; output</strong> for new modules failed its pre-set check.</li>
               </ul>
 
               <h4>Limits</h4>
@@ -183,7 +187,7 @@
                   </svg>
                   <div class="fig-buttons" role="group" aria-label="Choose a view">
                     <button class="button" type="button" aria-pressed="true" data-set-state="swap" data-label="view.swap" data-title="Aligned swap" data-copy="A module trained in another network replaces the one in slot 2, after a rotation fitted on shared inputs maps its output coordinates onto the recipient&rsquo;s. No retraining. This is the measured result.">Swap (aligned)</button>
-                    <button class="button" type="button" aria-pressed="false" data-set-state="load" data-label="view.load" data-title="Load into an empty slot" data-copy="A new module is trained into the empty slot while the loaded modules and readouts are frozen. One preliminary run on CIFAR-100; not a settled result.">Load into empty slot</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="load" data-label="view.load" data-title="Load into an empty slot" data-copy="A new module is trained into the empty slot while the loaded modules and readouts are frozen. This view shows the design; I do not report a result for it.">Load into empty slot</button>
                     <button class="button" type="button" aria-pressed="false" data-set-state="remove" data-label="view.remove" data-title="Unload a module" data-copy="Removing a module is the operation behind the long-term goal. Here only the mechanics exist; whether it suppresses an unwanted behavior has not been measured.">Remove</button>
                   </div>
                 </div>
@@ -203,14 +207,18 @@
               <p>The starting point was a production problem. The same medical radiograph product is deployed to several sites, and each site wants a different set of functions. In a multi-task model the task heads are entangled through the shared body, so every change of function set meant retraining and revalidating the whole model. Cartridge asks for the opposite: one body, trained once, with each function as a head, a cartridge, that can be loaded or left out, so that training and validation end at the head. There is no router; choosing what to load is handed back to the operator, because a router that chooses can send an input into the wrong module.</p>
 
               <h4>How it works</h4>
-              <p>The body is trained on an initial set of tasks and then frozen. Each head reads only the body&rsquo;s features and never another head, which is what makes removal safe. Three requirements were written down first: a site can pick any subset of heads and each keeps its full-build performance; a new head trained later on the frozen body should come close to training everything together; and if the body is replaced by one trained with the same recipe, the existing heads should still work without retraining. The tests, their margins and the pass rules were fixed before the runs. The first version gave every task group its own network stream. Readouts that fused several streams were dropped after removal tests showed that taking one stream out hurt other tasks, and the later version moved to one shared body with removable heads.</p>
+              <ul class="result-list compact">
+                <li>One frozen body; each head reads only the body&rsquo;s features, never another head.</li>
+                <li>Requirements fixed first: any subset of heads works; a new head nears joint training; heads survive a retrained body.</li>
+                <li>Tests, margins and pass rules were set before the runs.</li>
+              </ul>
 
               <h4>Results so far</h4>
-              <ul class="result-list">
-                <li><strong>Removal is free by construction.</strong> When each head reads only the body&rsquo;s features, removing a head leaves the others exactly unchanged. That follows from the wiring, not from learning, so I do not count it as evidence of modularity.</li>
-                <li><strong>Attaching a new task to a frozen body</strong> (new tasks, two head types, with and without dense tasks in the body&rsquo;s training set; three seeds each) recovered 40&ndash;96% of the gap between a body with no task training and one trained together with the new task. The frozen body never reached the jointly trained one within the pre-set margin, in all eight settings; the closest missed it by 1.2 times the margin. Mapping the frozen body&rsquo;s features into the strong body&rsquo;s coordinates and reusing its head did not close the gap either: it did worse than training a new head. That points to information missing from the body rather than mismatched coordinates (six of the eight settings were valid for this test, and it covers linear readouts only).</li>
-                <li><strong>Moving a head to another body</strong> trained with the same recipe but a different seed failed mostly because the feature coordinates differ. A linear map fitted without labels recovered 86&ndash;109% of the transfer loss (log-loss, three body seeds). F1 recovered less, falling short by 0.02&ndash;0.07 in 10 of 12 comparisons, and values above 100% come from the map shrinking the features, not from added information.</li>
-                <li><strong>An &ldquo;interpreter&rdquo; into a shared feature space did not work.</strong> Encoders that map any backbone into a common space missed their pre-registered criteria: trained without labels, all six judged bundles failed. Adding the head&rsquo;s own loss brought the loss within the bar, but only for heads used in training (a head it had not seen failed), and F1 still fell short in 25 of 40 cells, and a per-class bias correction rescued nine of those 25. These runs used a single seed, and the nine-cell rescue was recorded before an independent check.</li>
+              <ul class="result-list compact">
+                <li><strong>Removal is free by construction</strong> (wiring, not learning), so it is not evidence of modularity.</li>
+                <li><strong>A new task on the frozen body</strong> recovered 40&ndash;96% of the gap to joint training, never within the pre-set margin (0 of 8 settings).</li>
+                <li><strong>Moving a head to another body:</strong> a label-free linear map recovered 86&ndash;109% of the transfer loss, but F1 fell short in 10 of 12 comparisons.</li>
+                <li><strong>A shared-space &ldquo;interpreter&rdquo;</strong> failed its pre-registered criteria.</li>
               </ul>
               <p><strong>Status:</strong> on 12 October 2026 I closed the version-2 design and decided to redesign it from the data and task definitions up. The lessons carry into Expert Synapse.</p>
 
@@ -289,16 +297,21 @@
           <div class="panel-grid">
             <div class="panel-text">
               <h4>Idea and concept</h4>
-              <p>RevolverNet and Cartridge moved modules between networks I train myself. Expert Synapse asks the same question for large pretrained backbones that stay frozen, so the parts to exchange are the small ones around them. At each backbone block I attach a small bundle of experts, and the task head gets its own entrance experts. Features are rewritten as similarities to a fixed set of anchor tokens (relative representations, Moschella et al., 2023), and an expert&rsquo;s &ldquo;signature&rdquo; is how it responds to those anchors. When a head moves to a new backbone, the links between the two sides are computed once from the signatures, not relearned.</p>
+              <p>RevolverNet and Cartridge moved modules between networks I train myself. Expert Synapse asks the same question for large pretrained backbones that stay frozen, so the parts to exchange are the small ones around them. At each backbone block I attach a small bundle of experts, and the task head gets its own entrance experts; each entrance expert can read from any backbone expert in any block (one-to-one, one-to-many or many-to-many), and how dense those links are is one of the settings under test. Features are rewritten as similarities to a fixed set of anchor tokens (relative representations, Moschella et al., 2023), and an expert&rsquo;s &ldquo;signature&rdquo; is how it responds to those anchors. When a head moves to a new backbone, the links between the two sides are computed once from the signatures, not relearned.</p>
 
               <h4>How it will be judged</h4>
-              <p>Four controls sit in the same slot: (a) a learned adapter layer per backbone pair, (b) a closed-form orthogonal Procrustes translation, which is the alignment used in RevolverNet, (c) relative representations alone, and (d) experts alone. The pass rule is fixed in the approved design before the main runs: the moved head must reach the accuracy of the backbone it was trained on, minus a tolerance, and the accuracy of a label-trained link on the new backbone, minus a tolerance. The tolerances come from bootstrap standard errors and are set before training. The test bed is public COCO 2017 (box, mask and keypoint heads), and a negative outcome will be reported as one.</p>
+              <ul class="result-list compact">
+                <li>Fixed pass rule: the moved head within a tolerance of its home backbone and of a label-trained link.</li>
+                <li>Controls: learned adapter, Procrustes, relative representations alone, experts alone.</li>
+                <li>Public COCO 2017; tolerances set before training; a negative result will be reported as one.</li>
+              </ul>
 
               <h4>Results so far</h4>
               <p class="metric"><span>In progress</span> No results yet on performance, transplant or emergence.</p>
-              <ul class="result-list">
-                <li><strong>Two earlier routes were closed</strong> after missing their pre-set bars: a fixed &ldquo;convention&rdquo; encoder, which reached about 0.6 of the detection floor (COCO AP 0.195 against a 0.322 floor; under-fitting, single seed, selection set), and a learned translator into a shared feature space failed its pre-registered criteria (see Cartridge).</li>
-                <li><strong>Stage 0</strong> (head choice between a single-scale FCOS and a DETR-family head on five backbones, per-block probes, sanity checks) was implemented and pre-registered by 22 October 2026. As of 23 October, the official keypoint-model evaluation and the five block-probe runs are done, the keypoint gate run is under way (6 of 26 epochs, not a verdict), and the ten head-check runs have not been launched. Keypoints enter the claim only if a directly trained head clears a floor set at 70% of the official reference score; otherwise they are dropped.</li>
+              <ul class="result-list compact">
+                <li><strong>Two earlier routes were closed</strong> after missing pre-set bars: a fixed encoder (AP 0.195 against a 0.322 floor) and a learned translator.</li>
+                <li><strong>Stage 0</strong> is pre-registered; as of 23 October the keypoint reference and block probes are done and the keypoint gate is mid-run (6 of 26 epochs, no verdict).</li>
+                <li>Keypoints enter the claim only if a directly trained head clears 70% of the official reference score.</li>
               </ul>
 
               <h4>Limits</h4>
@@ -311,20 +324,29 @@
                 <div class="fig-canvas">
                   <svg viewBox="0 0 420 300" role="img" aria-labelledby="syn-svg-title syn-svg-desc">
                     <title id="syn-svg-title">Expert Synapse design sketch</title>
-                    <desc id="syn-svg-desc">A frozen backbone with a bundle of experts at each block. Links, set from each expert&rsquo;s response to fixed anchor tokens, connect them to entrance experts of a task head. Design only; no results.</desc>
+                    <desc id="syn-svg-desc">A frozen backbone with a bundle of experts at each block. Each of three head experts at the entrance of a task head is linked to a chosen subset of the backbone experts, across blocks. The links are set from each expert&rsquo;s response to fixed anchor tokens. Design only; no results.</desc>
 
                     <text class="syn-cap" x="16" y="20"><tspan class="h-attach">BACKBONE A</tspan><tspan class="s-attach">BACKBONE B</tspan></text>
                     <text class="syn-note" x="16" y="33">frozen</text>
-                    <text class="syn-cap" x="128" y="20">EXPERTS</text>
+                    <text class="syn-cap" x="124" y="20">EXPERTS</text>
                     <text class="syn-cap" x="258" y="20">ENTRANCE</text>
                     <text class="syn-cap" x="324" y="20">HEAD</text>
 
                     <g class="syn-links" fill="none">
-                      <path class="syn-link" d="M192 70 C232 70 228 85 266 85"/>
-                      <path class="syn-link" d="M192 70 C236 70 226 145 266 145"/>
-                      <path class="syn-link" d="M192 130 C232 130 228 145 266 145"/>
-                      <path class="syn-link" d="M192 130 C236 130 226 205 266 205"/>
-                      <path class="syn-link" d="M192 210 C232 210 228 205 266 205"/>
+                      <path class="syn-link l-a h-attach to1" d="M146 56 C204 56 212 85 266 85"/>
+                      <path class="syn-link l-a h-attach to1" d="M146 84 C204 84 212 85 266 85"/>
+                      <path class="syn-link l-a h-attach to2" d="M146 70 C204 70 212 145 266 145"/>
+                      <path class="syn-link l-a h-attach to2" d="M146 116 C204 116 212 145 266 145"/>
+                      <path class="syn-link l-a h-attach to2" d="M146 130 C204 130 212 145 266 145"/>
+                      <path class="syn-link l-a h-attach to3" d="M146 116 C204 116 212 205 266 205"/>
+                      <path class="syn-link l-a h-attach to3" d="M146 210 C204 210 212 205 266 205"/>
+                      <path class="syn-link l-b s-attach to1" d="M146 70 C204 70 212 85 266 85"/>
+                      <path class="syn-link l-b s-attach to1" d="M146 144 C204 144 212 85 266 85"/>
+                      <path class="syn-link l-b s-attach to2" d="M146 84 C204 84 212 145 266 145"/>
+                      <path class="syn-link l-b s-attach to2" d="M146 116 C204 116 212 145 266 145"/>
+                      <path class="syn-link l-b s-attach to2" d="M146 196 C204 196 212 145 266 145"/>
+                      <path class="syn-link l-b s-attach to3" d="M146 130 C204 130 212 205 266 205"/>
+                      <path class="syn-link l-b s-attach to3" d="M146 224 C204 224 212 205 266 205"/>
                     </g>
 
                     <g>
@@ -333,23 +355,28 @@
                       <circle class="syn-dot" cx="62" cy="164" r="1.8"/><circle class="syn-dot" cx="62" cy="171" r="1.8"/><circle class="syn-dot" cx="62" cy="178" r="1.8"/>
                       <rect class="syn-block" x="16" y="188" width="92" height="44"/><text class="syn-t" x="62" y="215" text-anchor="middle">block N</text>
                     </g>
+                    <path class="syn-tie" d="M108 70 H122 M122 56 V84 M122 56 H134 M122 70 H134 M122 84 H134 M108 130 H122 M122 116 V144 M122 116 H134 M122 130 H134 M122 144 H134 M108 210 H122 M122 196 V224 M122 196 H134 M122 210 H134 M122 224 H134" fill="none"/>
 
                     <g>
-                      <circle class="syn-exp" cx="138" cy="70" r="7"/><circle class="syn-exp" cx="158" cy="70" r="7"/><circle class="syn-exp" cx="178" cy="70" r="7"/>
-                      <circle class="syn-exp" cx="138" cy="130" r="7"/><circle class="syn-exp" cx="158" cy="130" r="7"/><circle class="syn-exp" cx="178" cy="130" r="7"/>
-                      <circle class="syn-exp" cx="138" cy="210" r="7"/><circle class="syn-exp" cx="158" cy="210" r="7"/><circle class="syn-exp" cx="178" cy="210" r="7"/>
+                      <circle class="syn-exp u1 nB" cx="140" cy="56" r="6"/>
+                      <circle class="syn-exp u2" cx="140" cy="70" r="6"/>
+                      <circle class="syn-exp u1" cx="140" cy="84" r="6"/>
+                      <circle class="syn-exp u2 u3" cx="140" cy="116" r="6"/>
+                      <circle class="syn-exp u2" cx="140" cy="130" r="6"/>
+                      <circle class="syn-exp nA" cx="140" cy="144" r="6"/>
+                      <circle class="syn-exp nA" cx="140" cy="196" r="6"/>
+                      <circle class="syn-exp u3 nB" cx="140" cy="210" r="6"/>
+                      <circle class="syn-exp nA" cx="140" cy="224" r="6"/>
                     </g>
-                    <path class="syn-tie" d="M108 70 H131 M108 130 H131 M108 210 H131" fill="none"/>
 
-                    <g>
-                      <rect class="syn-entr" x="268" y="73" width="24" height="24"/>
-                      <rect class="syn-entr" x="268" y="133" width="24" height="24"/>
-                      <rect class="syn-entr" x="268" y="193" width="24" height="24"/>
-                    </g>
+                    <g class="pick" data-pick="1" tabindex="0" role="button" aria-label="Show which backbone experts head expert 1 reads"><rect class="syn-entr" x="268" y="73" width="24" height="24"/><text class="syn-ent-t" x="280" y="89" text-anchor="middle">1</text></g>
+                    <g class="pick" data-pick="2" tabindex="0" role="button" aria-label="Show which backbone experts head expert 2 reads"><rect class="syn-entr" x="268" y="133" width="24" height="24"/><text class="syn-ent-t" x="280" y="149" text-anchor="middle">2</text></g>
+                    <g class="pick" data-pick="3" tabindex="0" role="button" aria-label="Show which backbone experts head expert 3 reads"><rect class="syn-entr" x="268" y="193" width="24" height="24"/><text class="syn-ent-t" x="280" y="209" text-anchor="middle">3</text></g>
                     <path class="syn-tie" d="M292 85 H324 M292 145 H324 M292 205 H324" fill="none"/>
                     <rect class="syn-head" x="324" y="58" width="80" height="170"/>
                     <text class="syn-head-t" x="364" y="140" text-anchor="middle">task</text>
                     <text class="syn-head-t" x="364" y="154" text-anchor="middle">head</text>
+                    <text class="syn-note" x="236" y="233">click 1, 2 or 3</text>
                     <text class="syn-note" x="364" y="246" text-anchor="middle"><tspan class="h-attach">trained here</tspan><tspan class="s-attach">same head</tspan></text>
                     <text class="syn-note" x="364" y="258" text-anchor="middle"><tspan class="s-attach">not retrained</tspan></text>
 
@@ -362,11 +389,14 @@
                     <text class="syn-note" x="132" y="286">responds to the anchors</text>
                   </svg>
                   <div class="fig-buttons" role="group" aria-label="Choose a view">
-                    <button class="button" type="button" aria-pressed="true" data-set-state="trained" data-label="design.no_results" data-title="Head trained on backbone A" data-copy="Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.">Trained on backbone A</button>
-                    <button class="button" type="button" aria-pressed="false" data-set-state="attach" data-label="target.not_shown" data-title="Attach to backbone B (the target)" data-copy="The aim is to recompute the links once from signatures and reuse the same head without retraining. This is the design goal; there are no results yet.">Attach to backbone B</button>
+                    <button class="button" type="button" aria-pressed="true" data-set-state="trained" data-label="design.no_results" data-title="Head trained on backbone A" data-copy="Each backbone block carries a bundle of experts, and each of the three head experts is linked to a chosen subset of them. Dashed experts are attached but not read by this head. Select a head expert to see what it reads.">Trained on A</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick1" data-label="head1.subset" data-title="Head expert 1 reads two experts" data-copy="Head expert 1 receives only from two backbone experts, both in block 1. The other experts stay attached to the backbone, but this head expert does not read them.">Head expert 1</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick2" data-label="head2.subset" data-title="Head expert 2 reads across blocks" data-copy="Head expert 2 receives from three backbone experts spread over blocks 1 and 2, so one head expert can combine experts from different blocks (many-to-one).">Head expert 2</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick3" data-label="head3.subset" data-title="Head expert 3 shares an expert" data-copy="Head expert 3 reads one expert in block 2 and one in block N. The block-2 expert is also read by head expert 2, so one backbone expert can feed several head experts (one-to-many).">Head expert 3</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="attach" data-label="target.not_shown" data-title="Attach to backbone B (the target)" data-copy="The aim is to recompute, once, from the signatures on backbone B which backbone experts each head expert reads, and reuse the same head without retraining. The pattern shown is illustrative; there are no results yet.">Attach to B</button>
                   </div>
                 </div>
-                <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 class="fig-title">Head trained on backbone A</h3><p class="fig-copy">Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.</p></div>
+                <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 class="fig-title">Head trained on backbone A</h3><p class="fig-copy">Each backbone block carries a bundle of experts, and each of the three head experts is linked to a chosen subset of them. Dashed experts are attached but not read by this head. Select a head expert to see what it reads.</p></div>
               </div>
             </div>
           </div>
