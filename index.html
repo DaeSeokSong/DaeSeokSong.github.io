@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261023b">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -126,7 +126,13 @@
               </ul>
 
               <h4>Limits</h4>
-              <p class="fine">Every figure in the table comes from one seed (42), so run-to-run variation was not measured; a pre-set check that the four intact models perform alike failed narrowly (a 2.5-point spread against a 2.0-point limit). The result shows that mismatched coordinates are one cause of swap failure, not that modules are compatible across datasets, architectures or class assignments, which I have not tested. Roles are assigned, not emergent, so I describe each module&rsquo;s share of the classes as imposed. Aligning independently trained networks already has a literature (model stitching, re-basin, relative representations) and module-level control has precursors (Gradient Routing, SteerMoE), so I claim none of this as new. This is preliminary, unpublished work.</p>
+              <ul class="result-list compact">
+                <li>Preliminary and unpublished; one seed (42), no run-to-run variation.</li>
+                <li>Pre-set check that intact models perform alike failed (2.5 vs 2.0 points).</li>
+                <li>Not tested: other datasets, architectures or class assignments.</li>
+                <li>Roles are assigned, not emergent; class shares are imposed.</li>
+                <li>Prior work exists (stitching, re-basin, Gradient Routing); no new claim.</li>
+              </ul>
             </div>
 
             <div class="panel-fig">
@@ -223,7 +229,11 @@
               <p><strong>Status:</strong> on 12 October 2026 I closed the version-2 design and decided to redesign it from the data and task definitions up. The lessons carry into Expert Synapse.</p>
 
               <h4>Limits</h4>
-              <p class="fine">Three seeds at most and few new tasks; the margins themselves rest on three seeds and are unstable. Data, backbone and sample-size details are omitted on this page. Several favorable-looking numbers are structural: zero leakage and zero removal loss in the fully separated version come from the wiring, and I do not cite them as modularity or emergence.</p>
+              <ul class="result-list compact">
+                <li>Three seeds at most, few new tasks; the margins are unstable.</li>
+                <li>Zero leakage and removal loss come from the wiring, not learning.</li>
+                <li>Data, backbone and sample-size details are omitted here.</li>
+              </ul>
             </div>
 
             <div class="panel-fig">
@@ -315,7 +325,11 @@
               </ul>
 
               <h4>Limits</h4>
-              <p class="fine">I do not claim novelty over relative representations (Moschella et al., 2023) or closed-form Procrustes translation between models (Maiorca et al., 2023); a literature search did not find a dense-feature (detection or segmentation) precedent, which is a statement about my search, not about the field. I do not claim emergent modularity either: the anchor form and routing rules are imposed by design, and whether roles emerge from learning alone is untested.</p>
+              <ul class="result-list compact">
+                <li>No novelty claimed over relative representations or Procrustes translation.</li>
+                <li>I found no dense-feature precedent; that describes my search only.</li>
+                <li>No emergence claim: anchors and routing are imposed; emergence is untested.</li>
+              </ul>
             </div>
 
             <div class="panel-fig">
@@ -376,7 +390,7 @@
                     <rect class="syn-head" x="324" y="58" width="80" height="170"/>
                     <text class="syn-head-t" x="364" y="140" text-anchor="middle">task</text>
                     <text class="syn-head-t" x="364" y="154" text-anchor="middle">head</text>
-                    <text class="syn-note" x="236" y="233">click 1, 2 or 3</text>
+                    <text class="syn-note" x="316" y="242" text-anchor="end"><tspan class="t-hint">click 1, 2 or 3</tspan><tspan class="syn-count t-p1">head 1 reads 2 of 9 experts</tspan><tspan class="syn-count t-p2">head 2 reads 3 of 9 experts</tspan><tspan class="syn-count t-p3">head 3 reads 2 of 9 experts</tspan><tspan class="t-att">links recomputed on B (illustrative)</tspan></text>
                     <text class="syn-note" x="364" y="246" text-anchor="middle"><tspan class="h-attach">trained here</tspan><tspan class="s-attach">same head</tspan></text>
                     <text class="syn-note" x="364" y="258" text-anchor="middle"><tspan class="s-attach">not retrained</tspan></text>
 
@@ -390,9 +404,9 @@
                   </svg>
                   <div class="fig-buttons" role="group" aria-label="Choose a view">
                     <button class="button" type="button" aria-pressed="true" data-set-state="trained" data-label="design.no_results" data-title="Head trained on backbone A" data-copy="Each backbone block carries a bundle of experts, and each of the three head experts is linked to a chosen subset of them. Dashed experts are attached but not read by this head. Select a head expert to see what it reads.">Trained on A</button>
-                    <button class="button" type="button" aria-pressed="false" data-set-state="pick1" data-label="head1.subset" data-title="Head expert 1 reads two experts" data-copy="Head expert 1 receives only from two backbone experts, both in block 1. The other experts stay attached to the backbone, but this head expert does not read them.">Head expert 1</button>
-                    <button class="button" type="button" aria-pressed="false" data-set-state="pick2" data-label="head2.subset" data-title="Head expert 2 reads across blocks" data-copy="Head expert 2 receives from three backbone experts spread over blocks 1 and 2, so one head expert can combine experts from different blocks (many-to-one).">Head expert 2</button>
-                    <button class="button" type="button" aria-pressed="false" data-set-state="pick3" data-label="head3.subset" data-title="Head expert 3 shares an expert" data-copy="Head expert 3 reads one expert in block 2 and one in block N. The block-2 expert is also read by head expert 2, so one backbone expert can feed several head experts (one-to-many).">Head expert 3</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick1" data-label="head1.subset" data-title="Head expert 1 reads two experts" data-copy="Head expert 1 reads 2 of the 9 backbone experts, both in block 1. The other seven stay attached to the backbone, but this head expert does not read them.">Head expert 1</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick2" data-label="head2.subset" data-title="Head expert 2 reads across blocks" data-copy="Head expert 2 reads 3 of the 9 backbone experts, spread over blocks 1 and 2, so one head expert can combine experts from different blocks (many-to-one).">Head expert 2</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="pick3" data-label="head3.subset" data-title="Head expert 3 shares an expert" data-copy="Head expert 3 reads 2 of the 9: one in block 2 and one in block N. The block-2 expert is also read by head expert 2, so one backbone expert can feed several head experts (one-to-many).">Head expert 3</button>
                     <button class="button" type="button" aria-pressed="false" data-set-state="attach" data-label="target.not_shown" data-title="Attach to backbone B (the target)" data-copy="The aim is to recompute, once, from the signatures on backbone B which backbone experts each head expert reads, and reuse the same head without retraining. The pattern shown is illustrative; there are no results yet.">Attach to B</button>
                   </div>
                 </div>
@@ -496,6 +510,6 @@
   </main>
 
   <footer><span>© <span id="year">2026</span> DaeSeok Song</span><span>Built as a record of work, not a list of buzzwords.</span></footer>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261023b"></script>
 </body>
 </html>

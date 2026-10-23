@@ -167,25 +167,53 @@ footer { display: flex; justify-content: space-between; padding: 1.5rem 0 2.5rem
 .fig[data-state="swap"] .s-swap,.fig[data-state="load"] .s-load,.fig[data-state="remove"] .s-remove,.fig[data-state="deploy"] .s-deploy,.fig[data-state="add"] .s-add,.fig[data-state="attach"] .s-attach { display: inline; }
 .fig[data-state="swap"] .h-swap,.fig[data-state="load"] .h-load,.fig[data-state="remove"] .h-remove,.fig[data-state="deploy"] .h-deploy,.fig[data-state="add"] .h-add,.fig[data-state="attach"] .h-attach { display: none; }
 .fig[data-state="attach"] .syn-block { fill: rgba(245,164,0,.14); stroke-dasharray: 6 3; }
-.fig[data-state="attach"] .syn-link { stroke: #b87700; stroke-dasharray: 5 4; animation: syn-dash 1.2s linear infinite; }
+.fig[data-state="attach"] .syn-link { stroke-dasharray: 5 4; animation: syn-dash 1.2s linear infinite; }
 @keyframes syn-dash { to { stroke-dashoffset: -18; } }
 
 /* Expert Synapse: head experts read chosen subsets of backbone experts */
-.syn-link { transition: opacity .2s ease; }
-.syn-exp { transition: opacity .2s ease, fill .2s ease; }
+.fig { --h1: var(--blue); --h2: #c26a00; --h3: #0d8a72; }
+.syn-link { transition: opacity .25s ease, stroke-width .25s ease; }
+.syn-link.to1 { stroke: var(--h1); }
+.syn-link.to2 { stroke: var(--h2); }
+.syn-link.to3 { stroke: var(--h3); }
+.syn-exp { transition: opacity .25s ease, fill .25s ease, stroke-width .25s ease; }
 .syn-ent-t { fill: white; font: 600 11px "IBM Plex Mono",monospace; pointer-events: none; }
-.pick { cursor: pointer; transition: opacity .2s ease; }
+.syn-count { font-weight: 700; font-size: 10px; }
+.pick { cursor: pointer; transition: opacity .25s ease, transform .25s ease; transform-box: fill-box; transform-origin: center; }
+.pick .syn-entr { stroke: var(--ink); stroke-width: 1.2; transition: stroke-width .2s ease; }
+.pick[data-pick="1"] .syn-entr { fill: var(--h1); }
+.pick[data-pick="2"] .syn-entr { fill: var(--h2); }
+.pick[data-pick="3"] .syn-entr { fill: var(--h3); }
+.pick:hover .syn-entr { stroke-width: 2.6; }
 .pick:focus { outline: none; }
-.pick:focus-visible .syn-entr { stroke: var(--signal); stroke-width: 3; }
-.fig .syn-exp.nA { fill: var(--paper); stroke: var(--muted); stroke-dasharray: 2.5 2; }
+.pick:focus-visible .syn-entr { stroke: var(--signal); stroke-width: 3.2; }
+.fig-buttons .button[data-set-state="pick1"] { border-left: 6px solid var(--h1); }
+.fig-buttons .button[data-set-state="pick2"] { border-left: 6px solid var(--h2); }
+.fig-buttons .button[data-set-state="pick3"] { border-left: 6px solid var(--h3); }
+/* experts read by exactly one head carry that head's color */
+.fig:not([data-state="attach"]) .syn-exp.u1:not(.u2):not(.u3) { stroke: var(--h1); stroke-width: 2.6; }
+.fig:not([data-state="attach"]) .syn-exp.u2:not(.u1):not(.u3) { stroke: var(--h2); stroke-width: 2.6; }
+.fig:not([data-state="attach"]) .syn-exp.u3:not(.u1):not(.u2) { stroke: var(--h3); stroke-width: 2.6; }
+.fig:not([data-state="attach"]) .syn-exp.u2.u3 { stroke-width: 2.6; }
+.fig .syn-exp.nA { fill: var(--paper); stroke: var(--muted); stroke-width: 1.3; stroke-dasharray: 2.5 2; }
 .fig[data-state="attach"] .syn-exp.nA { fill: var(--white); stroke: var(--ink); stroke-dasharray: none; }
 .fig[data-state="attach"] .syn-exp.nB { fill: var(--paper); stroke: var(--muted); stroke-dasharray: 2.5 2; }
-.fig[data-state="pick1"] .syn-link:not(.to1),.fig[data-state="pick2"] .syn-link:not(.to2),.fig[data-state="pick3"] .syn-link:not(.to3) { opacity: .1; }
-.fig[data-state="pick1"] .syn-exp:not(.u1),.fig[data-state="pick2"] .syn-exp:not(.u2),.fig[data-state="pick3"] .syn-exp:not(.u3) { opacity: .28; }
-.fig[data-state="pick1"] .syn-exp.u1,.fig[data-state="pick2"] .syn-exp.u2,.fig[data-state="pick3"] .syn-exp.u3 { fill: var(--blue); stroke: var(--blue-dark); stroke-dasharray: none; }
-.fig[data-state="pick1"] .syn-link.to1,.fig[data-state="pick2"] .syn-link.to2,.fig[data-state="pick3"] .syn-link.to3 { stroke-width: 2.4; stroke-dasharray: none; }
-.fig[data-state="pick1"] .pick:not([data-pick="1"]),.fig[data-state="pick2"] .pick:not([data-pick="2"]),.fig[data-state="pick3"] .pick:not([data-pick="3"]) { opacity: .38; }
-.fig[data-state="pick1"] .pick[data-pick="1"] .syn-entr,.fig[data-state="pick2"] .pick[data-pick="2"] .syn-entr,.fig[data-state="pick3"] .pick[data-pick="3"] .syn-entr { stroke: var(--signal); stroke-width: 3; }
+/* hint line under the entrance squares */
+.fig .t-p1, .fig .t-p2, .fig .t-p3, .fig .t-att { display: none; }
+.fig .t-p1 { fill: var(--h1); } .fig .t-p2 { fill: var(--h2); } .fig .t-p3 { fill: var(--h3); }
+.fig[data-state="pick1"] .t-p1, .fig[data-state="pick2"] .t-p2, .fig[data-state="pick3"] .t-p3, .fig[data-state="attach"] .t-att { display: inline; }
+.fig[data-state^="pick"] .t-hint, .fig[data-state="attach"] .t-hint { display: none; }
+/* picking a head expert: its links flow solid, everything else steps back */
+.fig[data-state="pick1"] .syn-link:not(.to1), .fig[data-state="pick2"] .syn-link:not(.to2), .fig[data-state="pick3"] .syn-link:not(.to3) { opacity: .06; }
+.fig[data-state="pick1"] .syn-exp:not(.u1), .fig[data-state="pick2"] .syn-exp:not(.u2), .fig[data-state="pick3"] .syn-exp:not(.u3) { opacity: .2; }
+.fig[data-state="pick1"] .syn-exp.u1 { fill: var(--h1); stroke: var(--ink); stroke-width: 2; stroke-dasharray: none; }
+.fig[data-state="pick2"] .syn-exp.u2 { fill: var(--h2); stroke: var(--ink); stroke-width: 2; stroke-dasharray: none; }
+.fig[data-state="pick3"] .syn-exp.u3 { fill: var(--h3); stroke: var(--ink); stroke-width: 2; stroke-dasharray: none; }
+.fig[data-state="pick1"] .syn-link.to1, .fig[data-state="pick2"] .syn-link.to2, .fig[data-state="pick3"] .syn-link.to3 { stroke-width: 3.2; stroke-dasharray: 8 5; animation: syn-flow 1s linear infinite; }
+@keyframes syn-flow { to { stroke-dashoffset: -26; } }
+.fig[data-state="pick1"] .pick:not([data-pick="1"]), .fig[data-state="pick2"] .pick:not([data-pick="2"]), .fig[data-state="pick3"] .pick:not([data-pick="3"]) { opacity: .3; }
+.fig[data-state="pick1"] .pick[data-pick="1"], .fig[data-state="pick2"] .pick[data-pick="2"], .fig[data-state="pick3"] .pick[data-pick="3"] { transform: scale(1.22); }
+.fig[data-state="pick1"] .pick[data-pick="1"] .syn-entr, .fig[data-state="pick2"] .pick[data-pick="2"] .syn-entr, .fig[data-state="pick3"] .pick[data-pick="3"] .syn-entr { stroke-width: 3; }
 
 .goal-block { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(2rem,6vw,5rem); margin-top: clamp(3.5rem,8vw,6.5rem); padding-top: clamp(2rem,4vw,3rem); border-top: 1px solid var(--ink); }
 .goal-head { min-width: 0; }
