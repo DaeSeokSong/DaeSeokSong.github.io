@@ -47,7 +47,7 @@
         <img src="profile.jpg" alt="Portrait of DaeSeok Song" width="320" height="320">
         <dl>
           <div><dt>Current</dt><dd>Connecteve · AI Engineer</dd></div>
-          <div><dt>Focus</dt><dd>Modular neural networks: module swap, alignment, and Expert Synapse (design)</dd></div>
+          <div><dt>Focus</dt><dd>Modular neural networks: RevolverNet, Cartridge, and Expert Synapse (design)</dd></div>
           <div><dt>Education</dt><dd>B.S. Information Security · Valedictorian</dd></div>
         </dl>
       </aside>
@@ -64,38 +64,47 @@
       <div class="section-heading reveal">
         <p class="section-index">01 / CURRENT RESEARCH</p>
         <h2>Swappable modules</h2>
-        <p>Can a trained network hand a functional part to another network without relearning everything? Two lines of work: a preliminary measured result, and a design in progress.</p>
+        <p>Can a trained network hand a functional part to another network without relearning everything? Three lines of work, each starting from the limit of the one before.</p>
       </div>
 
-      <div class="lines reveal">
-        <article class="line-card">
-          <p class="line-tag"><span>LINE 1</span> Measured &middot; preliminary</p>
-          <h3>Module swap &amp; alignment</h3>
-          <p>Swap a module between separately trained image classifiers. Naive swaps cost accuracy; an orthogonal Procrustes alignment, with no retraining, recovered 99.4&ndash;99.8% of that loss in three structures (CIFAR-10, single seed 42).</p>
-          <button type="button" class="line-link" data-open-tab="evidence-tab">See the evidence <span aria-hidden="true">&darr;</span></button>
-        </article>
-        <article class="line-card is-design">
-          <p class="line-tag"><span>LINE 2</span> In design &middot; no results yet</p>
-          <h3>Expert Synapse</h3>
-          <p>Keep a large pretrained vision transformer frozen and link experts on its blocks to a task head, so that a head trained on one backbone can attach to an unseen backbone without retraining. Stage 0 is under way; the main runs have not started.</p>
-          <button type="button" class="line-link" data-open-tab="next-tab">See the design <span aria-hidden="true">&darr;</span></button>
-        </article>
+      <div class="research-intro reveal">
+        <p class="lead">The long-term aim is an AI system whose parts people can inspect, replace, and when necessary remove. What I have measured so far is narrower: that parts can be swapped and aligned. Pick a line to see its idea, its architecture, and what the experiments have shown so far.</p>
+        <p class="origin">It started from the Plug-in modules idea in my 2024 KSRR paper (second author; the paper&rsquo;s author statement lists my contribution as data acquisition and interpretation, and I carried out the algorithm work from devising the method through implementation, training and experiments). Lines 1 and 3 use public datasets only; line 2 grew out of a problem in my day job. The wider question came from re-reading Hinton&rsquo;s GLOM and Forward-Forward work and asking what it would take for a learning system to be modular while staying cheap in memory and energy. I built a research harness on Claude Code (agents, skills and hooks) to check derivations and architectural claims against the literature. I set the questions, the pre-registered criteria and the decisions.</p>
       </div>
 
-      <div class="research-grid">
-        <div class="research-story reveal">
-          <p class="lead">The long-term aim is an AI system whose functional parts people can inspect, replace, and eventually remove. Today&rsquo;s results cover swapping and alignment only: I have not yet measured whether removing a module suppresses an unwanted behavior.</p>
-          <p>The swap work runs on a test bed I call RevolverNet. It starts from the Plug-in modules idea in my 2024 KSRR paper (second author; the paper&rsquo;s author statement lists data acquisition and interpretation, while I carried out the algorithm work end to end); the experiments here are independent work. The broader question grew out of re-reading Hinton&rsquo;s GLOM and Forward-Forward work and asking what it would take for a learning system to be modular while staying cheap in memory and energy. I checked the derivations and architectural claims against the literature using an agent harness I built for that purpose, then implemented and trained the design myself.</p>
-          <p>The two lines meet in one place: the closed-form orthogonal Procrustes alignment from line 1 is one of the four controls that Expert Synapse is compared against.</p>
+      <div class="research-tabs reveal" data-tabs>
+        <div class="line-menu" role="tablist" aria-label="Lines of research">
+          <button type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-revolvernet" id="rv-tab">
+            <span class="lm-tag">LINE 1 &middot; Measured &middot; preliminary</span>
+            <span class="lm-title">RevolverNet</span>
+            <span class="lm-copy">Swap and load modules in a trained network (CIFAR)</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-cartridge" id="ct-tab">
+            <span class="lm-tag">LINE 2 &middot; Closed &middot; redesign pending</span>
+            <span class="lm-title">Cartridge</span>
+            <span class="lm-copy">Load only the task heads a deployment needs (medical radiographs)</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-synapse" id="es-tab">
+            <span class="lm-tag is-design">LINE 3 &middot; In progress &middot; no results yet</span>
+            <span class="lm-title">Expert Synapse</span>
+            <span class="lm-copy">Attach a trained head to an unseen frozen backbone (COCO)</span>
+          </button>
+        </div>
 
-          <div class="research-tabs" data-tabs>
-            <div class="tab-list" role="tablist" aria-label="Research details">
-              <button type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-evidence" id="evidence-tab">Evidence</button>
-              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-method" id="method-tab">Method</button>
-              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-next" id="next-tab">Expert Synapse</button>
-            </div>
-            <div class="tab-panel" id="tab-evidence" role="tabpanel" aria-labelledby="evidence-tab">
-              <p class="metric"><span>99.4&ndash;99.8%</span> of the performance lost under naive swaps was recovered by an orthogonal Procrustes alignment with no retraining, in each of three completed structures (99.41, 99.84 and 99.63% before rounding; CIFAR-10, single seed 42).</p>
+        <!-- LINE 1 -->
+        <div class="tab-panel line-panel" id="tab-revolvernet" role="tabpanel" aria-labelledby="rv-tab">
+          <h3 class="panel-title">RevolverNet: swap and load modules in a trained network</h3>
+          <p class="panel-lead">Take a classifier made of detachable modules, move one module in from a separately trained network, and see whether it still works.</p>
+          <div class="panel-grid">
+            <div class="panel-text">
+              <h4>Idea and concept</h4>
+              <p>A classifier is split into slots. Each slot holds a module, which I call a bullet, that owns a group of classes and has its own readout. A router, the trigger, sends each input to the responsible slot. The cylinder is the set of slots, a chamber is one slot, and loading means putting a new bullet into an empty chamber. Two questions: can a module from another network be swapped in, and can a new module be loaded into an empty slot while the loaded ones stay untouched?</p>
+
+              <h4>How it works</h4>
+              <p>The class groups are assigned by me before training, so the modularity is imposed by structure, not learned. A naive swap fails because two networks trained from different initializations use different feature coordinates. An orthogonal rotation estimated from the two modules&rsquo; outputs on the same 512 input images from a validation split (orthogonal Procrustes) maps one set of coordinates onto the other with no retraining. Loading freezes the loaded modules and their readouts and trains only the new module; the router may be re-tuned.</p>
+
+              <h4>Results so far</h4>
+              <p class="metric"><span>99.4&ndash;99.8%</span> of the accuracy lost under naive swaps was recovered by the rotation, with no retraining, in each of three structures (99.41, 99.84 and 99.63% before rounding; CIFAR-10, single seed 42).</p>
               <div class="result-wrap" tabindex="0" role="region" aria-label="Swap results for the three structures"><table class="result-table">
                 <caption>Test accuracy (%) for swaps over every donor&rarr;recipient pair among four models (CIFAR-10, seed 42). Intact = no swap; naive = swapped without alignment.</caption>
                 <thead><tr><th scope="col">Structure</th><th scope="col">Intact</th><th scope="col">Naive swap</th><th scope="col">Aligned swap</th><th scope="col">Recovered</th></tr></thead>
@@ -105,98 +114,288 @@
                   <tr><th scope="row">C &middot; B plus an &ldquo;unknown&rdquo; option</th><td>71.3</td><td>33.9</td><td>71.2</td><td>99.6%</td></tr>
                 </tbody>
               </table></div>
-              <p class="fine">Two-module image classification; preliminary, unpublished independent work. Aligned swaps stay slightly below the intact models (by 0.3, 0.1 and 0.1 points). C scores lower in absolute terms because two held-out classes are trained to be rejected and count as errors, so accuracies are not comparable across structures, and I make no claim about detecting unknown inputs.</p>
-              <p class="fine">Not yet tested for this result: whether it holds across different datasets, architectures, or class assignments (follow-ups I have deferred while working on Expert Synapse), and when a new chamber and bullet should be added. None of these is a completed result.</p>
-            </div>
-            <div class="tab-panel" id="tab-method" role="tabpanel" aria-labelledby="method-tab" hidden>
-              <p>The test bed is RevolverNet. A <strong>bullet</strong> is a detachable subnetwork trained to own one or more classes. A <strong>chamber</strong> is the slot that receives it. A <strong>trigger</strong> routes each input to the responsible bullet in the structures that have a router (B and C); structure A reads out hierarchically without one. The schematic shows the idea.</p>
-              <p>In each structure, four models shared the dataset, architecture, and role assignment (roles were assigned by me, not learned) and differed only in initialization (Kaiming, orthogonal, uniform, sparse; one fixed seed, 42). Every directed donor-to-recipient pair among the four was swapped. For each swap, a mean-centered orthogonal Procrustes transform was computed from the donor and recipient modules&rsquo; outputs on the same input images; transferred bullets were not retrained, and every accuracy is measured on the full test set.</p>
-              <p class="fine">Recovery is a share of what naive swapping lost, not of the original accuracy. Independence holds only along the initialization axis: the result shows that mismatched coordinates are one cause of swap failure, not that modules are compatible across datasets or architectures, and no ranking between structures is claimed. Every figure comes from one seed (42), so run-to-run variation was not measured. Aligning independently trained networks already has a literature (model stitching, re-basin, relative representations), so I do not claim the alignment result as new.</p>
-            </div>
-            <div class="tab-panel" id="tab-next" role="tabpanel" aria-labelledby="next-tab" hidden>
-              <p class="metric"><span>In design</span> Expert Synapse has no results yet on performance, transplant, or emergence.</p>
-              <p>A large pretrained vision transformer stays frozen. At each backbone block I attach a small bundle of experts, and a task head gets its own entrance experts. Features are rewritten as similarities to a fixed set of anchor tokens (relative representations, Moschella et al., 2023), and the two sides are linked through &ldquo;signatures&rdquo;, meaning how each expert responds to those anchors. The link is computed once when a head is moved, not relearned. The aim is for a head trained on one backbone to attach to a different, unseen backbone without retraining.</p>
-              <p>Four controls sit in the same slot: (a) a learned adapter layer per backbone pair, (b) a closed-form orthogonal Procrustes translation, which is the alignment used in the swap result, (c) relative representations alone, and (d) experts alone. Success criteria and tolerances are written in the approved design document before the main runs, the test bed is public COCO 2017 (box, mask, and keypoint heads), and a negative outcome will be reported as one.</p>
-              <p class="fine">Status: stage 0 (head choice, per-block probes, sanity checks) is under way and the main runs have not started. The design follows two routes I closed after they missed their pre-set bars: a learned translator into a shared feature space, and a fixed &ldquo;convention&rdquo; encoder. I do not claim novelty over relative representations (Moschella et al., 2023) or closed-form Procrustes translation between models (Maiorca et al., 2023). I do not claim emergent modularity either: the anchor form and routing rules are imposed by design, and whether roles emerge from learning alone is untested.</p>
-            </div>
-          </div>
-        </div>
+              <p class="fine">Two-module image classification. In each structure the four models shared the dataset, architecture and role assignment and differed only in initialization (Kaiming, orthogonal, uniform, sparse). Recovery is a share of what naive swapping lost, not of the original accuracy. Aligned swaps stay slightly below the intact models (by 0.3, 0.1 and 0.1 points). C scores lower in absolute terms because two held-out classes are trained to be rejected and count as errors, so accuracies are not comparable across structures, and I make no claim about detecting unknown inputs.</p>
+              <ul class="result-list">
+                <li><strong>Initialization alone did not make naive swaps work.</strong> In an earlier test on a mixture-of-experts variant, naive swaps stayed near 38% (37.7&ndash;38.0%) whether the models shared an initialization, were initialized independently, or shared one for five epochs before diverging (three runs per condition; CIFAR-10, two modules). Orthogonal alignment then brought them to 89.6&ndash;90.3%, level with the intact models (89.7&ndash;90.3%). Alignment is still setting-dependent: with a standard backbone trained by backpropagation on CIFAR-100 (two modules, three seeds), naive swaps were already close to intact (64.5&ndash;64.7% against 65.1&ndash;65.5%).</li>
+                <li><strong>An earlier five-seed proof of concept</strong> recovered 86% of the loss, 9.9 points above a control that applied the same rotation to the opposite module. Its pre-set verdict was partial success; a three-seed look had suggested full success before the extra seeds corrected it.</li>
+                <li><strong>One attempt failed its pre-set check:</strong> a learned &ldquo;unknown&rdquo; output meant to signal when a new module is needed (it over-selected &ldquo;unknown&rdquo;).</li>
+              </ul>
 
-        <div class="schematic-col reveal">
-          <div class="revolver-demo" data-for="tab-evidence tab-method" role="group" aria-label="Interactive RevolverNet test-bed diagram">
-            <div class="demo-label"><span>TEST BED &middot; REVOLVERNET</span><span id="demo-state">role_a.selected</span></div>
-            <div class="demo-canvas">
-              <button class="trigger-button" type="button" id="trigger-button" aria-label="Rotate to the next chamber"><span>TRIGGER</span><b>&#8635;</b></button>
-              <div class="route-line" aria-hidden="true"></div>
-              <div class="cylinder" id="cylinder">
-                <button class="chamber is-active" type="button" aria-pressed="true" aria-label="Role A bullet" data-title="Role A bullet" data-copy="A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed."><span aria-hidden="true">A</span></button>
-                <button class="chamber" type="button" aria-pressed="false" aria-label="Role B bullet" data-title="Role B bullet" data-copy="A separately trained functional subnetwork. Hard routing lets its output affect only the inputs assigned to it."><span aria-hidden="true">B</span></button>
-                <button class="chamber chamber-open" type="button" aria-pressed="false" aria-label="Open chamber" data-title="Open chamber" data-copy="A future slot for a new function. Deciding when to add it remains planned work, not a completed result."><span aria-hidden="true">+</span></button>
+              <h4>Limits</h4>
+              <p class="fine">Every figure in the table comes from one seed (42), so run-to-run variation was not measured; a pre-set check that the four intact models perform alike failed narrowly (a 2.5-point spread against a 2.0-point limit). The result shows that mismatched coordinates are one cause of swap failure, not that modules are compatible across datasets, architectures or class assignments, which I have not tested. Roles are assigned, not emergent, so I describe each module&rsquo;s share of the classes as imposed. Aligning independently trained networks already has a literature (model stitching, re-basin, relative representations) and module-level control has precursors (Gradient Routing, SteerMoE), so I claim none of this as new. This is preliminary, unpublished work.</p>
+            </div>
+
+            <div class="panel-fig">
+              <div class="fig" data-state="swap" role="group" aria-label="Interactive RevolverNet architecture sketch">
+                <div class="demo-label"><span>ARCHITECTURE &middot; REVOLVERNET</span><span class="fig-state">view.swap</span></div>
+                <div class="fig-canvas">
+                  <svg viewBox="0 0 420 290" role="img" aria-labelledby="rv-svg-t rv-svg-d">
+                    <title id="rv-svg-t">RevolverNet architecture sketch</title>
+                    <desc id="rv-svg-d">An input goes to a router, which sends it to one of four slots. Each slot holds a module with its own readout, and the readouts feed the class scores. Three views show an aligned swap into slot 2, loading a new module into the empty slot 4, and unloading slot 2.</desc>
+                    <text class="syn-cap" x="16" y="20">INPUT</text>
+                    <text class="syn-cap" x="92" y="20">ROUTER</text>
+                    <text class="syn-cap" x="184" y="20">SLOTS</text>
+                    <text class="syn-cap" x="276" y="20">READOUT</text>
+                    <text class="syn-cap" x="354" y="20">OUTPUT</text>
+
+                    <rect class="fg-io" x="16" y="118" width="52" height="48"/><text class="syn-t" x="42" y="146" text-anchor="middle">image</text>
+                    <path class="fg-wire" d="M68 142 H92" fill="none"/>
+                    <rect class="fg-router" x="92" y="100" width="56" height="84"/>
+                    <text class="fg-router-t" x="120" y="138" text-anchor="middle">router</text>
+                    <text class="fg-router-s" x="120" y="152" text-anchor="middle">trigger</text>
+
+                    <g fill="none">
+                      <path class="fg-wire" d="M148 142 C166 142 166 63 184 63"/>
+                      <path class="fg-wire h-remove" d="M148 142 C166 142 166 115 184 115"/>
+                      <path class="fg-wire fg-wire-off s-remove" d="M148 142 C166 142 166 115 184 115"/>
+                      <path class="fg-wire" d="M148 142 C166 142 166 167 184 167"/>
+                      <path class="fg-wire fg-wire-off h-load" d="M148 142 C166 142 166 219 184 219"/>
+                      <path class="fg-wire s-load" d="M148 142 C166 142 166 219 184 219"/>
+                    </g>
+                    <g class="s-swap"><circle class="fg-badge" cx="166" cy="115" r="9"/><text class="fg-badge-t" x="166" y="119" text-anchor="middle">R</text></g>
+
+                    <!-- slot 1 -->
+                    <rect class="fg-mod" x="184" y="44" width="84" height="38"/><text class="syn-t" x="226" y="68" text-anchor="middle">module A</text>
+                    <text class="fg-frozen s-load" x="226" y="78" text-anchor="middle">frozen</text>
+                    <rect class="fg-read" x="276" y="44" width="44" height="38"/><text class="syn-note" x="298" y="67" text-anchor="middle">read</text>
+                    <!-- slot 2 -->
+                    <g class="h-swap h-remove"><rect class="fg-mod" x="184" y="96" width="84" height="38"/><text class="syn-t" x="226" y="120" text-anchor="middle">module B</text><text class="fg-frozen s-load" x="226" y="130" text-anchor="middle">frozen</text><rect class="fg-read" x="276" y="96" width="44" height="38"/><text class="syn-note" x="298" y="119" text-anchor="middle">read</text></g>
+                    <g class="s-swap"><rect class="fg-new" x="184" y="96" width="84" height="38"/><text class="syn-t" x="226" y="113" text-anchor="middle">module B&prime;</text><text class="fg-new-t" x="226" y="127" text-anchor="middle">from model B</text><rect class="fg-read" x="276" y="96" width="44" height="38"/><text class="syn-note" x="298" y="119" text-anchor="middle">read</text></g>
+                    <g class="s-remove"><rect class="fg-empty" x="184" y="96" width="84" height="38"/><text class="syn-note" x="226" y="119" text-anchor="middle">unloaded</text><rect class="fg-empty" x="276" y="96" width="44" height="38"/><path class="fg-cross" d="M184 96 L268 134 M268 96 L184 134"/></g>
+                    <!-- slot 3 -->
+                    <rect class="fg-mod" x="184" y="148" width="84" height="38"/><text class="syn-t" x="226" y="172" text-anchor="middle">module C</text>
+                    <text class="fg-frozen s-load" x="226" y="182" text-anchor="middle">frozen</text>
+                    <rect class="fg-read" x="276" y="148" width="44" height="38"/><text class="syn-note" x="298" y="171" text-anchor="middle">read</text>
+                    <!-- slot 4 -->
+                    <g class="h-load"><rect class="fg-empty" x="184" y="200" width="84" height="38"/><text class="syn-note" x="226" y="223" text-anchor="middle">empty slot</text><rect class="fg-empty" x="276" y="200" width="44" height="38"/></g>
+                    <g class="s-load"><rect class="fg-new" x="184" y="200" width="84" height="38"/><text class="syn-t" x="226" y="217" text-anchor="middle">new module</text><text class="fg-new-t" x="226" y="231" text-anchor="middle">trained here</text><rect class="fg-read fg-read-new" x="276" y="200" width="44" height="38"/><text class="syn-note" x="298" y="223" text-anchor="middle">read</text></g>
+
+                    <!-- bus and output -->
+                    <g fill="none">
+                      <path class="fg-wire" d="M320 63 H338 V142 M320 115 H338 M320 167 H338"/>
+                      <path class="fg-wire s-load" d="M320 219 H338 V142"/>
+                      <path class="fg-wire" d="M338 142 H354"/>
+                    </g>
+                    <rect class="fg-io" x="354" y="118" width="50" height="48"/><text class="syn-t" x="379" y="139" text-anchor="middle">class</text><text class="syn-t" x="379" y="153" text-anchor="middle">scores</text>
+
+                    <text class="syn-note" x="16" y="262"><tspan class="s-swap">R = orthogonal rotation (Procrustes), fitted on</tspan><tspan class="s-load">loaded modules and readouts stay frozen;</tspan><tspan class="s-remove">slot unloaded; the other modules are untouched;</tspan></text>
+                    <text class="syn-note" x="16" y="275"><tspan class="s-swap">shared inputs; the swapped module is not retrained</tspan><tspan class="s-load">only the new module (and the router) is trained</tspan><tspan class="s-remove">effect on behavior: not yet measured</tspan></text>
+                  </svg>
+                  <div class="fig-buttons" role="group" aria-label="Choose a view">
+                    <button class="button" type="button" aria-pressed="true" data-set-state="swap" data-label="view.swap" data-title="Aligned swap" data-copy="A module trained in another network replaces the one in slot 2, after a rotation fitted on shared inputs maps its output coordinates onto the recipient&rsquo;s. No retraining. This is the measured result.">Swap (aligned)</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="load" data-label="view.load" data-title="Load into an empty slot" data-copy="A new module is trained into the empty slot while the loaded modules and readouts are frozen. One preliminary run on CIFAR-100; not a settled result.">Load into empty slot</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="remove" data-label="view.remove" data-title="Unload a module" data-copy="Removing a module is the operation behind the long-term goal. Here only the mechanics exist; whether it suppresses an unwanted behavior has not been measured.">Remove</button>
+                  </div>
+                </div>
+                <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 class="fig-title">Aligned swap</h3><p class="fig-copy">A module trained in another network replaces the one in slot 2, after a rotation fitted on shared inputs maps its output coordinates onto the recipient&rsquo;s. No retraining. This is the measured result.</p></div>
               </div>
             </div>
-            <div class="demo-readout" aria-live="polite"><span>ACTIVE</span><h3 id="demo-title">Role A bullet</h3><p id="demo-copy">A detachable subnetwork assigned to one or more related classes. The number of classes is not fixed.</p></div>
-          </div>
-
-          <div class="synapse-demo" id="synapse-demo" data-for="tab-next" data-state="trained" role="group" aria-label="Expert Synapse design sketch" hidden>
-            <div class="demo-label"><span>DESIGN SKETCH &middot; NO RESULTS</span><span id="syn-state">design.no_results</span></div>
-            <div class="synapse-canvas">
-              <svg viewBox="0 0 420 300" role="img" aria-labelledby="syn-svg-title syn-svg-desc">
-                <title id="syn-svg-title">Expert Synapse design sketch</title>
-                <desc id="syn-svg-desc">A frozen backbone with a bundle of experts at each block. Links, set from each expert&rsquo;s response to fixed anchor tokens, connect them to entrance experts of a task head. Design only; no results.</desc>
-
-                <text class="syn-cap" x="16" y="20"><tspan class="only-a">BACKBONE A</tspan><tspan class="only-b">BACKBONE B</tspan></text>
-                <text class="syn-note" x="16" y="33">frozen</text>
-                <text class="syn-cap" x="128" y="20">EXPERTS</text>
-                <text class="syn-cap" x="258" y="20">ENTRANCE</text>
-                <text class="syn-cap" x="324" y="20">HEAD</text>
-
-                <g class="syn-links" fill="none">
-                  <path class="syn-link" d="M192 70 C232 70 228 85 266 85"/>
-                  <path class="syn-link" d="M192 70 C236 70 226 145 266 145"/>
-                  <path class="syn-link" d="M192 130 C232 130 228 145 266 145"/>
-                  <path class="syn-link" d="M192 130 C236 130 226 205 266 205"/>
-                  <path class="syn-link" d="M192 210 C232 210 228 205 266 205"/>
-                </g>
-
-                <g>
-                  <rect class="syn-block" x="16" y="48" width="92" height="44"/><text class="syn-t" x="62" y="75" text-anchor="middle">block 1</text>
-                  <rect class="syn-block" x="16" y="108" width="92" height="44"/><text class="syn-t" x="62" y="135" text-anchor="middle">block 2</text>
-                  <circle class="syn-dot" cx="62" cy="164" r="1.8"/><circle class="syn-dot" cx="62" cy="171" r="1.8"/><circle class="syn-dot" cx="62" cy="178" r="1.8"/>
-                  <rect class="syn-block" x="16" y="188" width="92" height="44"/><text class="syn-t" x="62" y="215" text-anchor="middle">block N</text>
-                </g>
-
-                <g>
-                  <circle class="syn-exp" cx="138" cy="70" r="7"/><circle class="syn-exp" cx="158" cy="70" r="7"/><circle class="syn-exp" cx="178" cy="70" r="7"/>
-                  <circle class="syn-exp" cx="138" cy="130" r="7"/><circle class="syn-exp" cx="158" cy="130" r="7"/><circle class="syn-exp" cx="178" cy="130" r="7"/>
-                  <circle class="syn-exp" cx="138" cy="210" r="7"/><circle class="syn-exp" cx="158" cy="210" r="7"/><circle class="syn-exp" cx="178" cy="210" r="7"/>
-                </g>
-                <path class="syn-tie" d="M108 70 H131 M108 130 H131 M108 210 H131" fill="none"/>
-
-                <g>
-                  <rect class="syn-entr" x="268" y="73" width="24" height="24"/>
-                  <rect class="syn-entr" x="268" y="133" width="24" height="24"/>
-                  <rect class="syn-entr" x="268" y="193" width="24" height="24"/>
-                </g>
-                <path class="syn-tie" d="M292 85 H324 M292 145 H324 M292 205 H324" fill="none"/>
-                <rect class="syn-head" x="324" y="58" width="80" height="170"/>
-                <text class="syn-head-t" x="364" y="140" text-anchor="middle">task</text>
-                <text class="syn-head-t" x="364" y="154" text-anchor="middle">head</text>
-                <text class="syn-note" x="364" y="246" text-anchor="middle"><tspan class="only-a">trained here</tspan><tspan class="only-b">same head</tspan></text>
-                <text class="syn-note" x="364" y="258" text-anchor="middle"><tspan class="only-b">not retrained</tspan></text>
-
-                <text class="syn-cap" x="16" y="262">ANCHOR TOKENS (FIXED)</text>
-                <g>
-                  <rect class="syn-anchor" x="16" y="268" width="10" height="10"/><rect class="syn-anchor" x="32" y="268" width="10" height="10"/><rect class="syn-anchor" x="48" y="268" width="10" height="10"/>
-                  <rect class="syn-anchor" x="64" y="268" width="10" height="10"/><rect class="syn-anchor" x="80" y="268" width="10" height="10"/><rect class="syn-anchor" x="96" y="268" width="10" height="10"/>
-                </g>
-                <text class="syn-note" x="132" y="274">signature = how an expert</text>
-                <text class="syn-note" x="132" y="286">responds to the anchors</text>
-              </svg>
-              <button class="button syn-toggle" type="button" id="syn-toggle">Attach to backbone B</button>
-            </div>
-            <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 id="syn-title">Head trained on backbone A</h3><p id="syn-copy">Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.</p></div>
           </div>
         </div>
+
+        <!-- LINE 2 -->
+        <div class="tab-panel line-panel" id="tab-cartridge" role="tabpanel" aria-labelledby="ct-tab" hidden>
+          <h3 class="panel-title">Cartridge: load only the task heads a deployment needs</h3>
+          <p class="panel-lead">Train one body once, make every task a removable head, and let the operator choose which heads to load at each site.</p>
+          <div class="panel-grid">
+            <div class="panel-text">
+              <h4>Idea and concept</h4>
+              <p>The starting point was a production problem. The same medical radiograph product is deployed to several sites, and each site wants a different set of functions. In a multi-task model the task heads are entangled through the shared body, so every change of function set meant retraining and revalidating the whole model. Cartridge asks for the opposite: one body, trained once, with each function as a head, a cartridge, that can be loaded or left out, so that training and validation end at the head. There is no router; choosing what to load is handed back to the operator, because a router that chooses can send an input into the wrong module.</p>
+
+              <h4>How it works</h4>
+              <p>The body is trained on an initial set of tasks and then frozen. Each head reads only the body&rsquo;s features and never another head, which is what makes removal safe. Three requirements were written down first: a site can pick any subset of heads and each keeps its full-build performance; a new head trained later on the frozen body should come close to training everything together; and if the body is replaced by one trained with the same recipe, the existing heads should still work without retraining. The tests, their margins and the pass rules were fixed before the runs. The first version gave every task group its own network stream. Readouts that fused several streams were dropped after removal tests showed that taking one stream out hurt other tasks, and the later version moved to one shared body with removable heads.</p>
+
+              <h4>Results so far</h4>
+              <ul class="result-list">
+                <li><strong>Removal is free by construction.</strong> When each head reads only the body&rsquo;s features, removing a head leaves the others exactly unchanged. That follows from the wiring, not from learning, so I do not count it as evidence of modularity.</li>
+                <li><strong>Attaching a new task to a frozen body</strong> (new tasks, two head types, with and without dense tasks in the body&rsquo;s training set; three seeds each) recovered 40&ndash;96% of the gap between a body with no task training and one trained together with the new task. The frozen body never reached the jointly trained one within the pre-set margin, in all eight settings; the closest missed it by 1.2 times the margin. Mapping the frozen body&rsquo;s features into the strong body&rsquo;s coordinates and reusing its head did not close the gap either: it did worse than training a new head. That points to information missing from the body rather than mismatched coordinates (six of the eight settings were valid for this test, and it covers linear readouts only).</li>
+                <li><strong>Moving a head to another body</strong> trained with the same recipe but a different seed failed mostly because the feature coordinates differ. A linear map fitted without labels recovered 86&ndash;109% of the transfer loss (log-loss, three body seeds). F1 recovered less, falling short by 0.02&ndash;0.07 in 10 of 12 comparisons, and values above 100% come from the map shrinking the features, not from added information.</li>
+                <li><strong>An &ldquo;interpreter&rdquo; into a shared feature space did not work.</strong> Encoders that map any backbone into a common space missed their pre-registered criteria: trained without labels, all six judged bundles failed. Adding the head&rsquo;s own loss brought the loss within the bar, but only for heads used in training (a head it had not seen failed), and F1 still fell short in 25 of 40 cells, and a per-class bias correction rescued nine of those 25. These runs used a single seed, and the nine-cell rescue was recorded before an independent check.</li>
+              </ul>
+              <p><strong>Status:</strong> on 12 October 2026 I closed the version-2 design and decided to redesign it from the data and task definitions up. The lessons carry into Expert Synapse.</p>
+
+              <h4>Limits</h4>
+              <p class="fine">Three seeds at most and few new tasks; the margins themselves rest on three seeds and are unstable. Data, backbone and sample-size details are omitted on this page. Several favorable-looking numbers are structural: zero leakage and zero removal loss in the fully separated version come from the wiring, and I do not cite them as modularity or emergence.</p>
+            </div>
+
+            <div class="panel-fig">
+              <div class="fig" data-state="deploy" role="group" aria-label="Interactive Cartridge architecture sketch">
+                <div class="demo-label"><span>ARCHITECTURE &middot; CARTRIDGE</span><span class="fig-state">view.deploy</span></div>
+                <div class="fig-canvas">
+                  <svg viewBox="0 0 420 290" role="img" aria-labelledby="ct-svg-t ct-svg-d">
+                    <title id="ct-svg-t">Cartridge architecture sketch</title>
+                    <desc id="ct-svg-d">An image feeds one shared, frozen body. Task heads, the cartridges, read the body&rsquo;s features and each produces its own task output. The operator chooses which heads are loaded. Three views show a deployed set, a head trained later and attached, and one head removed.</desc>
+                    <text class="syn-cap" x="16" y="20">NO ROUTER &middot; THE OPERATOR CHOOSES WHAT TO LOAD</text>
+                    <text class="syn-cap" x="16" y="108">INPUT</text>
+                    <rect class="fg-io" x="16" y="118" width="44" height="48"/><text class="syn-t" x="38" y="146" text-anchor="middle">image</text>
+                    <path class="fg-wire" d="M60 142 H76" fill="none"/>
+
+                    <rect class="fg-mod" x="76" y="44" width="84" height="194"/>
+                    <text class="syn-t" x="118" y="136" text-anchor="middle">shared</text>
+                    <text class="syn-t" x="118" y="152" text-anchor="middle">body</text>
+                    <text class="fg-frozen" x="118" y="172" text-anchor="middle">frozen</text>
+
+                    <g fill="none">
+                      <path class="fg-wire" d="M160 63 H172"/>
+                      <path class="fg-wire h-remove" d="M160 115 H172"/>
+                      <path class="fg-wire fg-wire-off s-remove" d="M160 115 H172"/>
+                      <path class="fg-wire" d="M160 167 H172"/>
+                      <path class="fg-wire fg-wire-off s-deploy" d="M160 219 H172"/>
+                      <path class="fg-wire s-add s-remove" d="M160 219 H172"/>
+                    </g>
+
+                    <!-- head 1 -->
+                    <rect class="fg-check on" x="172" y="57" width="12" height="12"/><path class="fg-tick" d="M175 63 l2.5 2.5 l4.5 -5" fill="none"/>
+                    <rect class="fg-mod" x="196" y="44" width="108" height="38"/><text class="syn-t" x="250" y="68" text-anchor="middle">head A</text>
+                    <path class="fg-wire" d="M304 63 H322" fill="none"/>
+                    <rect class="fg-read" x="322" y="44" width="82" height="38"/><text class="syn-note" x="363" y="67" text-anchor="middle">task A</text>
+                    <!-- head 2 -->
+                    <g class="h-remove"><rect class="fg-check on" x="172" y="109" width="12" height="12"/><path class="fg-tick" d="M175 115 l2.5 2.5 l4.5 -5" fill="none"/>
+                    <rect class="fg-mod" x="196" y="96" width="108" height="38"/><text class="syn-t" x="250" y="120" text-anchor="middle">head B</text>
+                    <path class="fg-wire" d="M304 115 H322" fill="none"/>
+                    <rect class="fg-read" x="322" y="96" width="82" height="38"/><text class="syn-note" x="363" y="119" text-anchor="middle">task B</text></g>
+                    <g class="s-remove"><rect class="fg-check" x="172" y="109" width="12" height="12"/>
+                    <rect class="fg-empty" x="196" y="96" width="108" height="38"/><text class="syn-note" x="250" y="119" text-anchor="middle">unloaded</text>
+                    <rect class="fg-empty" x="322" y="96" width="82" height="38"/><path class="fg-cross" d="M322 96 L404 134 M404 96 L322 134"/></g>
+                    <!-- head 3 -->
+                    <rect class="fg-check on" x="172" y="161" width="12" height="12"/><path class="fg-tick" d="M175 167 l2.5 2.5 l4.5 -5" fill="none"/>
+                    <rect class="fg-mod" x="196" y="148" width="108" height="38"/><text class="syn-t" x="250" y="172" text-anchor="middle">head C</text>
+                    <path class="fg-wire" d="M304 167 H322" fill="none"/>
+                    <rect class="fg-read" x="322" y="148" width="82" height="38"/><text class="syn-note" x="363" y="171" text-anchor="middle">task C</text>
+                    <!-- head 4 -->
+                    <g class="s-deploy"><rect class="fg-check" x="172" y="213" width="12" height="12"/><rect class="fg-empty" x="196" y="200" width="108" height="38"/><text class="syn-note" x="250" y="223" text-anchor="middle">not loaded</text><rect class="fg-empty" x="322" y="200" width="82" height="38"/></g>
+                    <g class="s-add"><rect class="fg-check on" x="172" y="213" width="12" height="12"/><path class="fg-tick" d="M175 219 l2.5 2.5 l4.5 -5" fill="none"/><rect class="fg-new" x="196" y="200" width="108" height="38"/><text class="syn-t" x="250" y="217" text-anchor="middle">head D</text><text class="fg-new-t" x="250" y="231" text-anchor="middle">trained later</text><path class="fg-wire" d="M304 219 H322" fill="none"/><rect class="fg-read fg-read-new" x="322" y="200" width="82" height="38"/><text class="syn-note" x="363" y="223" text-anchor="middle">task D</text></g>
+                    <g class="s-remove"><rect class="fg-check on" x="172" y="213" width="12" height="12"/><path class="fg-tick" d="M175 219 l2.5 2.5 l4.5 -5" fill="none"/><rect class="fg-mod" x="196" y="200" width="108" height="38"/><text class="syn-t" x="250" y="224" text-anchor="middle">head D</text><path class="fg-wire" d="M304 219 H322" fill="none"/><rect class="fg-read" x="322" y="200" width="82" height="38"/><text class="syn-note" x="363" y="223" text-anchor="middle">task D</text></g>
+
+                    <text class="syn-note" x="16" y="262"><tspan class="s-deploy">each head reads only the body&rsquo;s features, never another head;</tspan><tspan class="s-add">a new head is trained on the frozen body and attached;</tspan><tspan class="s-remove">unloading a head removes one output;</tspan></text>
+                    <text class="syn-note" x="16" y="275"><tspan class="s-deploy">the operator decides the set when deploying</tspan><tspan class="s-add">the loaded heads and the body stay as they are</tspan><tspan class="s-remove">the other tasks are unchanged by construction</tspan></text>
+                  </svg>
+                  <div class="fig-buttons" role="group" aria-label="Choose a view">
+                    <button class="button" type="button" aria-pressed="true" data-set-state="deploy" data-label="view.deploy" data-title="Deploy a chosen set" data-copy="The operator loads the heads a site needs on one shared, frozen body. Each head reads only the body&rsquo;s features, and no router decides where an input goes.">Deploy a set</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="add" data-label="view.add" data-title="Add a head later" data-copy="A head trained afterwards is attached to the frozen body while the loaded heads stay as they are. The test is how close it comes to a body trained with the new task. In my runs it did not get within the pre-set margin.">Add later</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="remove" data-label="view.remove" data-title="Remove one head" data-copy="Unloading a head leaves the others unchanged, because no head reads another. That is a property of the wiring, not evidence that the modules are modular.">Remove one</button>
+                  </div>
+                </div>
+                <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 class="fig-title">Deploy a chosen set</h3><p class="fig-copy">The operator loads the heads a site needs on one shared, frozen body. Each head reads only the body&rsquo;s features, and no router decides where an input goes.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LINE 3 -->
+        <div class="tab-panel line-panel" id="tab-synapse" role="tabpanel" aria-labelledby="es-tab" hidden>
+          <h3 class="panel-title">Expert Synapse: attach a trained head to an unseen frozen backbone</h3>
+          <p class="panel-lead">Keep a large pretrained vision transformer frozen and link experts on its blocks to a task head, so that a head trained on one backbone can attach to a different backbone without retraining.</p>
+          <div class="panel-grid">
+            <div class="panel-text">
+              <h4>Idea and concept</h4>
+              <p>RevolverNet and Cartridge moved modules between networks I train myself. Expert Synapse asks the same question for large pretrained backbones that stay frozen, so the parts to exchange are the small ones around them. At each backbone block I attach a small bundle of experts, and the task head gets its own entrance experts. Features are rewritten as similarities to a fixed set of anchor tokens (relative representations, Moschella et al., 2023), and an expert&rsquo;s &ldquo;signature&rdquo; is how it responds to those anchors. When a head moves to a new backbone, the links between the two sides are computed once from the signatures, not relearned.</p>
+
+              <h4>How it will be judged</h4>
+              <p>Four controls sit in the same slot: (a) a learned adapter layer per backbone pair, (b) a closed-form orthogonal Procrustes translation, which is the alignment used in RevolverNet, (c) relative representations alone, and (d) experts alone. The pass rule is fixed in the approved design before the main runs: the moved head must reach the accuracy of the backbone it was trained on, minus a tolerance, and the accuracy of a label-trained link on the new backbone, minus a tolerance. The tolerances come from bootstrap standard errors and are set before training. The test bed is public COCO 2017 (box, mask and keypoint heads), and a negative outcome will be reported as one.</p>
+
+              <h4>Results so far</h4>
+              <p class="metric"><span>In progress</span> No results yet on performance, transplant or emergence.</p>
+              <ul class="result-list">
+                <li><strong>Two earlier routes were closed</strong> after missing their pre-set bars: a fixed &ldquo;convention&rdquo; encoder, which reached about 0.6 of the detection floor (COCO AP 0.195 against a 0.322 floor; under-fitting, single seed, selection set), and a learned translator into a shared feature space failed its pre-registered criteria (see Cartridge).</li>
+                <li><strong>Stage 0</strong> (head choice between a single-scale FCOS and a DETR-family head on five backbones, per-block probes, sanity checks) was implemented and pre-registered by 22 October 2026. As of 23 October, the official keypoint-model evaluation and the five block-probe runs are done, the keypoint gate run is under way (6 of 26 epochs, not a verdict), and the ten head-check runs have not been launched. Keypoints enter the claim only if a directly trained head clears a floor set at 70% of the official reference score; otherwise they are dropped.</li>
+              </ul>
+
+              <h4>Limits</h4>
+              <p class="fine">I do not claim novelty over relative representations (Moschella et al., 2023) or closed-form Procrustes translation between models (Maiorca et al., 2023); a literature search did not find a dense-feature (detection or segmentation) precedent, which is a statement about my search, not about the field. I do not claim emergent modularity either: the anchor form and routing rules are imposed by design, and whether roles emerge from learning alone is untested.</p>
+            </div>
+
+            <div class="panel-fig">
+              <div class="fig" data-state="trained" role="group" aria-label="Expert Synapse design sketch">
+                <div class="demo-label"><span>DESIGN SKETCH &middot; NO RESULTS</span><span class="fig-state">design.no_results</span></div>
+                <div class="fig-canvas">
+                  <svg viewBox="0 0 420 300" role="img" aria-labelledby="syn-svg-title syn-svg-desc">
+                    <title id="syn-svg-title">Expert Synapse design sketch</title>
+                    <desc id="syn-svg-desc">A frozen backbone with a bundle of experts at each block. Links, set from each expert&rsquo;s response to fixed anchor tokens, connect them to entrance experts of a task head. Design only; no results.</desc>
+
+                    <text class="syn-cap" x="16" y="20"><tspan class="h-attach">BACKBONE A</tspan><tspan class="s-attach">BACKBONE B</tspan></text>
+                    <text class="syn-note" x="16" y="33">frozen</text>
+                    <text class="syn-cap" x="128" y="20">EXPERTS</text>
+                    <text class="syn-cap" x="258" y="20">ENTRANCE</text>
+                    <text class="syn-cap" x="324" y="20">HEAD</text>
+
+                    <g class="syn-links" fill="none">
+                      <path class="syn-link" d="M192 70 C232 70 228 85 266 85"/>
+                      <path class="syn-link" d="M192 70 C236 70 226 145 266 145"/>
+                      <path class="syn-link" d="M192 130 C232 130 228 145 266 145"/>
+                      <path class="syn-link" d="M192 130 C236 130 226 205 266 205"/>
+                      <path class="syn-link" d="M192 210 C232 210 228 205 266 205"/>
+                    </g>
+
+                    <g>
+                      <rect class="syn-block" x="16" y="48" width="92" height="44"/><text class="syn-t" x="62" y="75" text-anchor="middle">block 1</text>
+                      <rect class="syn-block" x="16" y="108" width="92" height="44"/><text class="syn-t" x="62" y="135" text-anchor="middle">block 2</text>
+                      <circle class="syn-dot" cx="62" cy="164" r="1.8"/><circle class="syn-dot" cx="62" cy="171" r="1.8"/><circle class="syn-dot" cx="62" cy="178" r="1.8"/>
+                      <rect class="syn-block" x="16" y="188" width="92" height="44"/><text class="syn-t" x="62" y="215" text-anchor="middle">block N</text>
+                    </g>
+
+                    <g>
+                      <circle class="syn-exp" cx="138" cy="70" r="7"/><circle class="syn-exp" cx="158" cy="70" r="7"/><circle class="syn-exp" cx="178" cy="70" r="7"/>
+                      <circle class="syn-exp" cx="138" cy="130" r="7"/><circle class="syn-exp" cx="158" cy="130" r="7"/><circle class="syn-exp" cx="178" cy="130" r="7"/>
+                      <circle class="syn-exp" cx="138" cy="210" r="7"/><circle class="syn-exp" cx="158" cy="210" r="7"/><circle class="syn-exp" cx="178" cy="210" r="7"/>
+                    </g>
+                    <path class="syn-tie" d="M108 70 H131 M108 130 H131 M108 210 H131" fill="none"/>
+
+                    <g>
+                      <rect class="syn-entr" x="268" y="73" width="24" height="24"/>
+                      <rect class="syn-entr" x="268" y="133" width="24" height="24"/>
+                      <rect class="syn-entr" x="268" y="193" width="24" height="24"/>
+                    </g>
+                    <path class="syn-tie" d="M292 85 H324 M292 145 H324 M292 205 H324" fill="none"/>
+                    <rect class="syn-head" x="324" y="58" width="80" height="170"/>
+                    <text class="syn-head-t" x="364" y="140" text-anchor="middle">task</text>
+                    <text class="syn-head-t" x="364" y="154" text-anchor="middle">head</text>
+                    <text class="syn-note" x="364" y="246" text-anchor="middle"><tspan class="h-attach">trained here</tspan><tspan class="s-attach">same head</tspan></text>
+                    <text class="syn-note" x="364" y="258" text-anchor="middle"><tspan class="s-attach">not retrained</tspan></text>
+
+                    <text class="syn-cap" x="16" y="262">ANCHOR TOKENS (FIXED)</text>
+                    <g>
+                      <rect class="syn-anchor" x="16" y="268" width="10" height="10"/><rect class="syn-anchor" x="32" y="268" width="10" height="10"/><rect class="syn-anchor" x="48" y="268" width="10" height="10"/>
+                      <rect class="syn-anchor" x="64" y="268" width="10" height="10"/><rect class="syn-anchor" x="80" y="268" width="10" height="10"/><rect class="syn-anchor" x="96" y="268" width="10" height="10"/>
+                    </g>
+                    <text class="syn-note" x="132" y="274">signature = how an expert</text>
+                    <text class="syn-note" x="132" y="286">responds to the anchors</text>
+                  </svg>
+                  <div class="fig-buttons" role="group" aria-label="Choose a view">
+                    <button class="button" type="button" aria-pressed="true" data-set-state="trained" data-label="design.no_results" data-title="Head trained on backbone A" data-copy="Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.">Trained on backbone A</button>
+                    <button class="button" type="button" aria-pressed="false" data-set-state="attach" data-label="target.not_shown" data-title="Attach to backbone B (the target)" data-copy="The aim is to recompute the links once from signatures and reuse the same head without retraining. This is the design goal; there are no results yet.">Attach to backbone B</button>
+                  </div>
+                </div>
+                <div class="demo-readout" aria-live="polite"><span>VIEW</span><h3 class="fig-title">Head trained on backbone A</h3><p class="fig-copy">Experts sit at each frozen block and at the head&rsquo;s entrance. The links between them follow each expert&rsquo;s signature, its response to a fixed set of anchor tokens.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="goal-block reveal" id="goal">
+        <div class="goal-head">
+          <p class="section-index">WHERE THIS IS GOING</p>
+          <h3>AI that is efficient, and that people can control</h3>
+          <p>The three lines above are steps toward a learning system whose structure stays understandable and controllable as it gets more capable: cheap to run, and made of parts that people can find, adjust, and, if they cause harm, remove without breaking the rest. What counts as harmful, and how to separate it into parts, is an open problem that I do not claim to have solved.</p>
+        </div>
+        <ol class="goal-list">
+          <li>
+            <span class="goal-tag">GOAL</span>
+            <h4>Remove risky roles, keep the useful ones</h4>
+            <p>Find which module, expert, neuron or head carries a role, then remove the parts responsible for harmful or dangerous behavior while the useful parts keep working. I have not yet measured whether removing a module suppresses an unwanted behavior, and module-level control already has precursors (Gradient Routing, SteerMoE).</p>
+          </li>
+          <li>
+            <span class="goal-tag">DIRECTION</span>
+            <h4>Efficiency, with ideas from the brain</h4>
+            <p>Structures and learning rules that cut compute, memory and training cost. This is a direction, not a result: combining GLOM and Forward-Forward did not raise accuracy for me, and in one same-recipe comparison (image classification, three seeds, one structure) a rule that sends error back through a separately learned feedback path trailed backpropagation by about 13 points (77.5% against 90.8%). Learning feedback paths already has prior work, so I claim nothing new there. I have only tried spiking networks lightly (in July 2026, a surrogate-gradient network and a transport-free learning rule on spikes); the rule stalled well below the surrogate-gradient network, and I did not take it further.</p>
+          </li>
+          <li>
+            <span class="goal-tag is-open">UNTESTED</span>
+            <h4>Roles that emerge instead of being assigned</h4>
+            <p>Today I assign the roles. Whether modular roles can arise from learning alone is untested, and it is the planned follow-up.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -234,14 +433,14 @@
     </section>
 
     <section class="section dark-section" id="writing">
-      <div class="section-heading reveal"><p class="section-index">03 / PUBLICATIONS</p><h2>Papers and patent applications</h2></div>
+      <div class="section-heading reveal"><p class="section-index">03 / PUBLICATIONS</p><h2>Papers and patents</h2></div>
       <div class="publication-list">
         <a class="publication reveal" href="https://doi.org/10.1007/978-3-032-38236-8_8" target="_blank" rel="noreferrer"><span class="publication-type">MICCAI 2026 · THIRD AUTHOR · PUBLISHED · POSTER PRESENTED</span><h3>Beyond Landmarks: Anchor-Guided Orientation Regression for Robust Spinopelvic Measurement</h3><p>Springer LNCS, September 2026; presented as a poster at the conference (Sep 27 – Oct 1, 2026). Predicts an anchor and a direction vector instead of paired landmarks; the paper reports mean angle error falling from 2.32° to 2.18° on external validation images (ConvNeXt).</p><span class="publication-arrow">↗</span></a>
         <div class="publication reveal"><span class="publication-type">IEEE FMLDS 2026 · THIRD AUTHOR · ACCEPTED · POSTER IN NOVEMBER</span><h3>Image-Only Acquisition Triage for Orthopedic AI: Avoiding Unreliable DICOM Metadata and Circular Validation</h3><p>Accepted; camera-ready version submitted. Poster planned for the conference (Nov 20–23, 2026, Kobe, Japan). Predicts acquisition factors from pixels alone instead of unreliable DICOM metadata, and checks the model against references independent of the metadata its labels came from.</p></div>
-        <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">JOURNAL · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research, August 2024 · The paper&rsquo;s author statement lists my contribution as data acquisition and interpretation; in practice I carried out the algorithm work end to end, from devising the method to implementation, training and experiments, and I am a named co-inventor on the related patent application below. The paper reports 75.7% accuracy for the ensemble on an independent test set, against 62.0–72.8% for the individual models.</p><span class="publication-arrow">↗</span></a>
+        <a class="publication reveal" href="https://doi.org/10.1186/s43019-024-00228-3" target="_blank" rel="noreferrer"><span class="publication-type">JOURNAL · SECOND AUTHOR · 2024</span><h3>Accurate, automated classification of radiographic knee osteoarthritis severity using a novel method of deep learning: Plug-in modules</h3><p>Knee Surgery &amp; Related Research, August 2024 · The paper&rsquo;s author statement lists my contribution as data acquisition and interpretation. In addition, I carried out the algorithm work from devising the method through implementation, training and experiments, and I am named as an inventor on the related patent below. The paper reports 75.7% accuracy for the ensemble on an independent test set, against 62.0–72.8% for the individual models.</p><span class="publication-arrow">↗</span></a>
         <a class="publication reveal" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11224543" target="_blank" rel="noreferrer"><span class="publication-type">FIRST AUTHOR · POSTER · KSC 2022</span><h3>Image size transformation data augmentation method for lesion segmentation on normalization and augmentation medical images</h3><p>Korea Software Congress, December 2022 · On a foot-wound segmentation dataset, combining image-size transformation variants raised mean test Dice from 86.95 to 90.48 (10-run mean).</p><span class="publication-arrow">↗</span></a>
-        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2024</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Application 10-2024-0124529 · PCT/KR2025/012689 · pending</p></div>
-        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · INVENTOR · 2025</span><h3>Method and apparatus for generating joint images with an artificial intelligence model</h3><p>Korean Application 10-2025-0043898 · Generates a patient&rsquo;s projected knee state from the current radiograph and its K–L and OARSI grades.</p></div>
+        <div class="publication reveal"><span class="publication-type">PATENT · INVENTOR · 2024</span><h3>Plug-in modules for automated radiographic knee osteoarthritis severity classification</h3><p>Korean Patent 10-2804644 (Application 10-2024-0124529, granted 2025) · PCT/KR2025/012689, international application</p></div>
+        <div class="publication reveal"><span class="publication-type">PATENT APPLICATION · CO-INVENTOR · 2025</span><h3>Method and apparatus for generating joint images with an artificial intelligence model</h3><p>Korean Application 10-2025-0043898 · Generates a patient&rsquo;s projected knee state from the current radiograph and its K–L and OARSI grades.</p></div>
       </div>
     </section>
 
@@ -261,7 +460,7 @@
     </section>
 
     <section class="contact-section">
-      <div class="contact-copy reveal"><p class="section-index">05 / CONTACT</p><h2>Interested in modular intelligence, robust learning, or medical AI?</h2><p>I am preparing for graduate study on how learning systems can be built from parts that are separable, reusable, and open to inspection. I am glad to walk through the module-swap experiments and the Expert Synapse design, with their limits, in detail, and I can share the full swap-experiment protocol on request.</p></div>
+      <div class="contact-copy reveal"><p class="section-index">05 / CONTACT</p><h2>Interested in modular intelligence, robust learning, or medical AI?</h2><p>I am preparing for graduate study on how learning systems can be built from parts that are separable, reusable, and open to inspection. I am glad to walk through the three lines of work (RevolverNet, Cartridge and the Expert Synapse design), with their limits, in detail, and I can share the full swap-experiment protocol on request.</p></div>
       <div class="contact-actions reveal"><a class="button primary" href="mailto:zxdsaqwe1231@naver.com">Send email</a><button class="button" id="copy-email" type="button" data-email="zxdsaqwe1231@naver.com">Copy address</button><a class="text-link" href="https://www.linkedin.com/in/daeseok-song/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a class="text-link" href="https://github.com/DaeSeokSong" target="_blank" rel="noreferrer">GitHub ↗</a></div>
     </section>
   </main>
